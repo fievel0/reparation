@@ -1,0 +1,23 @@
+package com.reparation.reparation.persistence;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.reparation.reparation.entities.Equipment;
+
+public interface IEquipmentDAO {
+
+    List<Equipment> findAll();
+
+    Optional<Equipment> findById(Long id_equip);
+
+    //aqui se pueden definir los metodos necesarios para validar entradas
+    //ejemplo
+    //List<Equipment> findByAntiguedadInRange(BigDecimal minanti_equip, BigDecimal maxanti_equip);
+    //esto es para los Query Methods
+
+    void save(Equipment equipment);
+
+    void deleteById(Long id_equip);
+
+}
