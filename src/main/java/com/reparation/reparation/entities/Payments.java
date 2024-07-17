@@ -36,8 +36,8 @@ public class Payments {
     private BigDecimal money_b_pay;
 
     @ManyToOne
-    @JoinColumn(name="id_order", nullable=false)
-    private Rep_order payments;
+    @JoinColumn(name="order_id", nullable=false)
+    private Rep_order order;
 
 
 }

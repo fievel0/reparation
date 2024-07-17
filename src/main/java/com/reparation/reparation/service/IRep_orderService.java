@@ -8,7 +8,7 @@ import com.reparation.reparation.entities.Rep_order;
 public interface IRep_orderService {
      List<Rep_order> findAll();
 
-    Optional<Rep_order> findById(Long id_order);
+    Optional<Rep_order> findById(Long id);
 
     void save(Rep_order rep_order);
 

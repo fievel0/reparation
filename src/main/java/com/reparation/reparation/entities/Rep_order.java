@@ -50,15 +50,16 @@ public class Rep_order {
 
     @ManyToOne
     @JoinColumn(name="id_customers", nullable=false)
-    private Customers rep_order;
+    private Customers customer;
 
     @ManyToOne
     @JoinColumn(name="id_equip", nullable=false)
-    private Equipment rep_order_equip;
+    private Equipment equipment;
 
     @Builder.Default
-    @OneToMany(mappedBy="payments", cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
+    @OneToMany(mappedBy="order", cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
     @JsonIgnore
     private List<Payments> paymentsList = new ArrayList<>();
-
+   
+    private Payments payment;
 }
