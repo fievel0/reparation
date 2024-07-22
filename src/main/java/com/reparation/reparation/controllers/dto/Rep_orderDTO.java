@@ -5,10 +5,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import com.reparation.reparation.entities.Payments;
-
-import java.util.ArrayList;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,8 +28,6 @@ public class Rep_orderDTO {
 
     private EquipmentDTO equipment;
 
-    private PaymentsDTO payment;
-    @Builder.Default
-    private List<Payments> paymentsList = new ArrayList<>();
+    private List<PaymentsDTO> payments;
 
 }

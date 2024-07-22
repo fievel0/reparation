@@ -61,5 +61,4 @@ public class Rep_order {
     @JsonIgnore
     private List<Payments> paymentsList = new ArrayList<>();
    
-    private Payments payment;
 }

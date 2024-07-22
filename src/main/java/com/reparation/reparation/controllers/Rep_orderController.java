@@ -1,6 +1,10 @@
 package com.reparation.reparation.controllers;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +16,6 @@ import com.reparation.reparation.controllers.dto.CustomerDTO;
 import com.reparation.reparation.controllers.dto.EquipmentDTO;
 import com.reparation.reparation.controllers.dto.PaymentsDTO;
 import com.reparation.reparation.controllers.dto.Rep_orderDTO;
-import com.reparation.reparation.entities.Payments;
 import com.reparation.reparation.entities.Rep_order;
 import com.reparation.reparation.service.IRep_orderService;
 
@@ -37,7 +40,6 @@ public class Rep_orderController {
                 .addit_details(rep_order.getAddit_details())
 
                 .customer(CustomerDTO.builder()
-                    .id_customer(rep_order.getCustomer().getId_customer())
                     .name(rep_order.getCustomer().getName())
                     .card_identifi(rep_order.getCustomer().getCard_identifi())
                     .phone(rep_order.getCustomer().getPhone())
@@ -45,7 +47,6 @@ public class Rep_orderController {
                 .build())
 
                 .equipment(EquipmentDTO.builder()
-                    .id_equip(rep_order.getEquipment().getId_equip())
                     .model_equip(rep_order.getEquipment().getModel_equip())
                     .brand_equip(rep_order.getEquipment().getBrand_equip())
                     .color_equip(rep_order.getEquipment().getColor_equip())
@@ -60,18 +61,55 @@ public class Rep_orderController {
                     .cau_dam_equip(rep_order.getEquipment().getCau_dam_equip())
                 .build())
                 
-                .payment(PaymentsDTO.builder()
-                .id_pay(rep_order.getPayments().getId_pay())
-                                
-                .build())
-
+                .payments(rep_order.getPaymentsList().stream()
+                    .map(payment -> PaymentsDTO.builder()    
+                        .id_pay(payment.getId_pay())  
+                        .date_pay(payment.getDate_pay())
+                        .money_pay(payment.getMoney_pay())
+                        .money_b_pay(payment.getMoney_b_pay())
+                    .build())
+                .collect(Collectors.toList()))
 
                 .build();
             return ResponseEntity.ok(rep_orderDTO);
         }
 
         return ResponseEntity.notFound().build();     
-
     }
+
+    @GetMapping("/findAll")
+    public ResponseEntity<?> findAll(){
+        List<Rep_orderDTO> rep_orderList = rep_orderService.findAll()
+            .stream()
+            .map(rep_order -> {
+                // Inicializa la lista de pagos
+                Hibernate.initialize(rep_order.getPaymentsList());
+
+                return Rep_orderDTO.builder()
+                    .id_order(rep_order.getId_order()) 
+                    .create_date(rep_order.getCreate_date())
+    
+
+                    .customer(CustomerDTO.builder()
+                        .id_customer(rep_order.getCustomer().getId_customer())
+                        .name(rep_order.getCustomer().getName())
+                    .build())
+
+                    .equipment(EquipmentDTO.builder()
+                        .id_equip(rep_order.getEquipment().getId_equip())
+                        .model_equip(rep_order.getEquipment().getModel_equip())
+                    .build())
+
+                    .payments(rep_order.getPaymentsList().stream()
+                        .map(payment -> PaymentsDTO.builder()      
+                            .date_pay(payment.getDate_pay())
+                        .build())
+                        .collect(Collectors.toList()))
+                    .build();
+            })
+            .collect(Collectors.toList());
+
+        return ResponseEntity.ok(rep_orderList);     
+    }   
 
 }
