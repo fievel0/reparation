@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.reparation.reparation.entities.Payments;
 import com.reparation.reparation.persistence.IPaymentsDAO;
+import com.reparation.reparation.service.IPaymentsService;
 
 @Service
-public class PaymentsServiceimpl implements IPaymentsDAO {
+public class PaymentsServiceimpl implements IPaymentsService {
 
     @Autowired
     private IPaymentsDAO paymentsDAO;
