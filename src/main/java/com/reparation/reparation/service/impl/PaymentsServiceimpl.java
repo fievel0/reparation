@@ -36,7 +36,4 @@ public class PaymentsServiceimpl implements IPaymentsService {
         paymentsDAO.deleteById(id_pay);
     }
 
-
-
-
 }
