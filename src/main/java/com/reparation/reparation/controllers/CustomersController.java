@@ -38,7 +38,6 @@ public class CustomersController {
                 .card_identifi(customer.getCard_identifi())
                 .phone(customer.getPhone())
                 .mail(customer.getMail())
-                .rep_orderList(customer.getRep_orderList())
                 .build();
 
             return ResponseEntity.ok(customerDTO);
@@ -56,7 +55,6 @@ public class CustomersController {
                 .card_identifi(customer.getCard_identifi())
                 .phone(customer.getPhone())
                 .mail(customer.getMail())
-                .rep_orderList(customer.getRep_orderList())
                 .build())
             .toList();
         return ResponseEntity.ok(customerList);
@@ -75,7 +73,6 @@ public class CustomersController {
         .card_identifi(customerDTO.getCard_identifi())
         .phone(customerDTO.getPhone())
         .mail(customerDTO.getMail())
-        .rep_orderList(customerDTO.getRep_orderList())
         .build());
 
         return ResponseEntity.created(new URI("/api/customer/save")).build();

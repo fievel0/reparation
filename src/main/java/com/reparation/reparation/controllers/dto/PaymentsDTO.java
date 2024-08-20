@@ -1,6 +1,6 @@
 package com.reparation.reparation.controllers.dto;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -16,17 +16,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class CustomerDTO {
+public class PaymentsDTO {
+
+    private Long id_pay;
     
-    private Long id_customer;
-   
-    private String name;
-   
-    private String card_identifi;
+    private String date_pay;
     
-    private String phone;
-  
-    private String mail;
-    @Builder.Default
-    private List<Rep_order> rep_orderList = new ArrayList<>();
+    private BigDecimal money_pay;
+   
+    private BigDecimal money_b_pay;
+
+    private Rep_order order;
+
+    private Long order_id;
+    
+    private BigDecimal order_tot_pay;
+    
+    private List<Rep_orderDTO> rep_orders;
+
 }

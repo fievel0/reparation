@@ -44,7 +44,11 @@ public class Customers {
 
     
     @Builder.Default
+<<<<<<< HEAD
     @OneToMany(mappedBy="rep_order", fetch=FetchType.LAZY, orphanRemoval=true)
+=======
+    @OneToMany(mappedBy="customer", cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, orphanRemoval=true)
+>>>>>>> ccbc66bd6ed0b176794381d254e1cf6a21b25cb8
     @JsonIgnore
     private List<Rep_order> rep_orderList = new ArrayList<>();
 

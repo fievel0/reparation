@@ -55,7 +55,7 @@ public class Equipment {
     private String cau_dam_equip;
 
     @Builder.Default
-    @OneToMany(mappedBy="rep_order_equip", cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
+    @OneToMany(mappedBy="equipment", cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
     private List<Rep_order> rep_order_equipList = new ArrayList<>();
 
 

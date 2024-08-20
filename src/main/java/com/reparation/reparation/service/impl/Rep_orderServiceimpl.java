@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.reparation.reparation.entities.Rep_order;
 import com.reparation.reparation.persistence.IRep_orderDAO;
+import com.reparation.reparation.service.IRep_orderService;
 
 @Service
-public class Rep_orderServiceimpl implements IRep_orderDAO{
+public class Rep_orderServiceimpl implements IRep_orderService{
 
     @Autowired
     private IRep_orderDAO rep_orderDAO;
