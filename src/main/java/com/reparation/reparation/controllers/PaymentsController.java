@@ -7,10 +7,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -97,4 +99,36 @@ public class PaymentsController {
         return ResponseEntity.created(new URI("/api/equipment/save")).build();
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updatePayments(@PathVariable Long id, @RequestBody PaymentsDTO paymentsDTO){
+        try {
+            Optional<Payments> paymentsOptional = paymentsService.findById(id);
+
+         if(paymentsOptional.isPresent()){
+
+            Payments payments = paymentsOptional.get();
+            payments.setDate_pay((paymentsDTO.getDate_pay()));
+            payments.setMoney_pay(paymentsDTO.getMoney_pay());
+            payments.setMoney_b_pay(paymentsDTO.getMoney_b_pay());
+
+            Optional<Rep_order> repOrderOptional = rep_orderService.findById(paymentsDTO.getOrder_id());
+            if(!repOrderOptional.isPresent()){
+                return ResponseEntity.badRequest().body("Orden de reparación no existe");
+            }
+    
+            // Asignar el nuevo Rep_order al Payments
+            payments.setOrder(repOrderOptional.get());
+           // payments.setOrder(paymentsDTO.getOrder_id);
+            // Guardar el objeto actualizado
+            paymentsService.save(payments);
+            
+            return ResponseEntity.ok("Registro Actualizado");
+            } else {
+            return ResponseEntity.notFound().build();
+         }
+         } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor: " + e.getMessage());
+         }
+    } 
 }
