@@ -38,6 +38,4 @@ public class Payments {
     @ManyToOne
     @JoinColumn(name="id_order", nullable=false)
     private Rep_order order;
-
-
 }

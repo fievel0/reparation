@@ -86,6 +86,9 @@ public class CustomersController {
 
             Customers customer = customerOptional.get();
             customer.setName(customerDTO.getName());
+            customer.setCard_identifi(customerDTO.getCard_identifi());
+            customer.setPhone(customerDTO.getPhone());
+            customer.setMail(customerDTO.getMail());
             customerService.save(customer);
             return ResponseEntity.ok("Registro Actualizado");
         }

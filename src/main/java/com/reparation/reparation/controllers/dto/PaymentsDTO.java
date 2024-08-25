@@ -19,19 +19,15 @@ import lombok.NoArgsConstructor;
 public class PaymentsDTO {
 
     private Long id_pay;
-    
     private String date_pay;
-    
     private BigDecimal money_pay;
-   
     private BigDecimal money_b_pay;
-
-    private Rep_order order;
-
+    //private Rep_order order;
+    
     private Long order_id;
     
     private BigDecimal order_tot_pay;
     
-    private List<Rep_orderDTO> rep_orders;
+   // private List<Rep_orderDTO> rep_orders;
 
 }
