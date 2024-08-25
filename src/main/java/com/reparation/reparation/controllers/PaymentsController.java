@@ -118,7 +118,6 @@ public class PaymentsController {
     
             // Asignar el nuevo Rep_order al Payments
             payments.setOrder(repOrderOptional.get());
-           // payments.setOrder(paymentsDTO.getOrder_id);
             // Guardar el objeto actualizado
             paymentsService.save(payments);
             
@@ -130,5 +129,5 @@ public class PaymentsController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor: " + e.getMessage());
          }
-    } 
+    }
 }
