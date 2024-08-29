@@ -1,5 +1,7 @@
 package com.reparation.reparation.controllers;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -111,5 +115,25 @@ public class Rep_orderController {
 
         return ResponseEntity.ok(rep_orderList);     
     }   
+
+
+    @PostMapping("/save")
+     public ResponseEntity<?> save(@RequestBody Rep_orderDTO orderDTO) throws URISyntaxException{
+        
+        if(orderDTO.getCreate_date().isBlank()){
+            return ResponseEntity.badRequest().build();
+        }
+
+        rep_orderService.save(Rep_order.builder())
+            .deadline(orderDTO.getDeadline())
+            .tot_pay(orderDTO.getTot_pay())
+            .addit_details(orderDTO.getAddit_details())
+            
+        .build();
+
+        rep_orderService.save(rep_order);
+
+        return ResponseEntity.created(new URI("/api/order_rep/save")).build();
+    } 
 
 }
