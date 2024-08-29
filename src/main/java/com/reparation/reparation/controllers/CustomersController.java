@@ -63,7 +63,7 @@ public class CustomersController {
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody CustomerDTO customerDTO) throws URISyntaxException{
 
-        if(customerDTO.getName().isBlank()){
+        if(customerDTO.getName().isEmpty()){
 
             return ResponseEntity.badRequest().build();
         }
