@@ -166,4 +166,66 @@ public class Rep_orderController {
         return ResponseEntity.created(new URI("/api/order_rep/save")).build();
     }
 
+    
+   /*  @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateRep_order(@PathVariable Long id, @RequestBody Rep_orderDTO rep_orderDTO){
+        try {
+            Optional<Rep_order> repOrderOptional = rep_orderService.findById(id);
+
+         if(repOrderOptional.isPresent()){
+
+            Rep_order rep_order = repOrderOptional.get()
+            rep_order.setCreate_date(orderDTO.getCreate_date());
+            rep_order.setDeadline(orderDTO.getDeadline());
+            rep_order.setTot_pay(orderDTO.getTot_pay());
+            rep_order.setAddit_details(orderDTO.getAddit_details());
+            //.customer(customer)
+            //.equipment(equipment)
+
+            //Actualizar Equipo
+        Optional<Equipment> equipmentOptional = equipmentService.findById(EquipmentDTO.getId_equip());
+        if(!equipmentOptional.isPresent()){
+            return ResponseEntity.badRequest().body("Equipo no existe");
+        
+
+        // Asignar el nuevo equipo al rep_order
+        equipment.setId_equip(equipmentOptional.get());
+        // Guardar el objeto actualizado
+        equipmentService.save(equipment);
+        
+        return ResponseEntity.ok("Registro Actualizado");
+        } else {
+          return ResponseEntity.notFound().build();
+        }
+        
+        }  catch(Exception e){
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor: " + e.getMessage());
+     }
+            
+            //Actualizar Cliente
+            Optional<Customers> curtomerOptional = customerService.findById(CustomerDTO.getId_customer());
+            if(!curtomerOptional.isPresent()){
+                return ResponseEntity.badRequest().body("Cliente no existe");
+            }
+    
+            // Asignar el nuevo Cliente al reo_order
+            customer.setId_customer(curtomerOptional.get());
+            // Guardar el objeto actualizado
+            customerService.save(customer);
+            
+            return ResponseEntity.ok("Registro Actualizado");
+            } else {
+            return ResponseEntity.notFound().build();
+         }
+         } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor: " + e.getMessage());
+         }
+
+         
+
+        }*/
+
+
 }
