@@ -1,14 +1,19 @@
 package com.reparation.reparation.controllers;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +21,11 @@ import com.reparation.reparation.controllers.dto.CustomerDTO;
 import com.reparation.reparation.controllers.dto.EquipmentDTO;
 import com.reparation.reparation.controllers.dto.PaymentsDTO;
 import com.reparation.reparation.controllers.dto.Rep_orderDTO;
+import com.reparation.reparation.entities.Customers;
+import com.reparation.reparation.entities.Equipment;
 import com.reparation.reparation.entities.Rep_order;
+import com.reparation.reparation.service.ICustomersService;
+import com.reparation.reparation.service.IEquipmentService;
 import com.reparation.reparation.service.IRep_orderService;
 
 @RestController
@@ -26,6 +35,13 @@ public class Rep_orderController {
     @Autowired
     private IRep_orderService rep_orderService;
 
+     @Autowired
+    private ICustomersService customerService;  // Servicio para manejar clientes
+
+    @Autowired
+    private IEquipmentService equipmentService;  // Servicio para manejar equipos
+
+   
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         Optional<Rep_order> rep_orderOptional = rep_orderService.findById(id);
@@ -112,24 +128,42 @@ public class Rep_orderController {
         return ResponseEntity.ok(rep_orderList);     
     }   
 
-  //
-   /*  @PostMapping("/save")
+  
+    @PostMapping("/save")
      public ResponseEntity<?> save(@RequestBody Rep_orderDTO orderDTO) throws URISyntaxException{
         
-        if(orderDTO.getCreate_date().isBlank()){
-            return ResponseEntity.badRequest().build();
+        if (orderDTO.getCreate_date() == null) {
+            return ResponseEntity.badRequest().body("La fecha de recepción es obligatoria");
         }
 
-        rep_orderService.save(Rep_order.builder())
+        // Verifica si el cliente con el id proporcionado existe
+        Optional<Customers> optionalCustomer = customerService.findById(orderDTO.getCustomer().getId_customer());
+        if (!optionalCustomer.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no existe, por favor verifique su ID");
+        }
+        Customers customer = optionalCustomer.get();
+
+        // Verifica si el equipo con el id proporcionado existe
+        Optional<Equipment> optionalEquipment = equipmentService.findById(orderDTO.getEquipment().getId_equip());
+        if (!optionalEquipment.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipo no existe, por favor verifique su ID");
+        }
+        Equipment equipment = optionalEquipment.get();
+
+        // Construye el objeto Rep_order utilizando el builder
+        Rep_order repOrder = Rep_order.builder()
+            .create_date(orderDTO.getCreate_date())
             .deadline(orderDTO.getDeadline())
             .tot_pay(orderDTO.getTot_pay())
             .addit_details(orderDTO.getAddit_details())
+            .customer(customer)
+            .equipment(equipment)
             
         .build();
 
-        rep_orderService.save(rep_order);
+        rep_orderService.save(repOrder);
 
         return ResponseEntity.created(new URI("/api/order_rep/save")).build();
-    }*/ 
+    }
 
 }
