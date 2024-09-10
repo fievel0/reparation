@@ -199,7 +199,7 @@ public class Rep_orderController {
                 Equipment equipment = equipmentOptional.get();
                  rep_order.setEquipment(equipment);
              } else {
-                return ResponseEntity.badRequest().body("Equipo no existe");
+                return ResponseEntity.badRequest().body("El Id del equipo no existe");
             }
         
         // Guarda el objeto actualizado
