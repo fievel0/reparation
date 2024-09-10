@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -43,7 +44,7 @@ public class Rep_order {
     @Column(name = "total_pago")
     private BigDecimal tot_pay;
     @Column(name = "detalles_adicionales")
-    private BigDecimal addit_details;
+    private String addit_details;
     //@Column(name = "foto")
     //private Object photo;
 

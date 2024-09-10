@@ -10,9 +10,11 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -167,65 +169,60 @@ public class Rep_orderController {
     }
 
     
-   /*  @PutMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateRep_order(@PathVariable Long id, @RequestBody Rep_orderDTO rep_orderDTO){
         try {
             Optional<Rep_order> repOrderOptional = rep_orderService.findById(id);
 
          if(repOrderOptional.isPresent()){
 
-            Rep_order rep_order = repOrderOptional.get()
-            rep_order.setCreate_date(orderDTO.getCreate_date());
-            rep_order.setDeadline(orderDTO.getDeadline());
-            rep_order.setTot_pay(orderDTO.getTot_pay());
-            rep_order.setAddit_details(orderDTO.getAddit_details());
-            //.customer(customer)
-            //.equipment(equipment)
+            Rep_order rep_order = repOrderOptional.get();
 
-            //Actualizar Equipo
-        Optional<Equipment> equipmentOptional = equipmentService.findById(EquipmentDTO.getId_equip());
-        if(!equipmentOptional.isPresent()){
-            return ResponseEntity.badRequest().body("Equipo no existe");
-        
 
-        // Asignar el nuevo equipo al rep_order
-        equipment.setId_equip(equipmentOptional.get());
-        // Guardar el objeto actualizado
-        equipmentService.save(equipment);
-        
-        return ResponseEntity.ok("Registro Actualizado");
-        } else {
-          return ResponseEntity.notFound().build();
-        }
-        
-        }  catch(Exception e){
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor: " + e.getMessage());
-     }
+            rep_order.setCreate_date(rep_order.getCreate_date());
+            rep_order.setDeadline(rep_orderDTO.getDeadline());
+            rep_order.setTot_pay(rep_orderDTO.getTot_pay());
+            rep_order.setAddit_details(rep_orderDTO.getAddit_details());
             
-            //Actualizar Cliente
-            Optional<Customers> curtomerOptional = customerService.findById(CustomerDTO.getId_customer());
-            if(!curtomerOptional.isPresent()){
-                return ResponseEntity.badRequest().body("Cliente no existe");
+           // Actualiza el cliente asociado
+           Optional<Customers> customerOptional = customerService.findById(rep_orderDTO.getCustomer().getId_customer());
+           if (customerOptional.isPresent()) {
+               Customers customer = customerOptional.get();
+               rep_order.setCustomer(customer);
+           } else {
+               return ResponseEntity.badRequest().body("Cliente no existe");
+           }
+
+            // Actualiza el equipo asociado
+             Optional<Equipment> equipmentOptional = equipmentService.findById(rep_orderDTO.getEquipment().getId_equip());
+            if (equipmentOptional.isPresent()) {
+                Equipment equipment = equipmentOptional.get();
+                 rep_order.setEquipment(equipment);
+             } else {
+                return ResponseEntity.badRequest().body("Equipo no existe");
             }
-    
-            // Asignar el nuevo Cliente al reo_order
-            customer.setId_customer(curtomerOptional.get());
-            // Guardar el objeto actualizado
-            customerService.save(customer);
-            
+        
+        // Guarda el objeto actualizado
+        rep_orderService.save(rep_order);
             return ResponseEntity.ok("Registro Actualizado");
             } else {
-            return ResponseEntity.notFound().build();
-         }
-         } catch(Exception e){
-            e.printStackTrace();
+                 return ResponseEntity.notFound().build();
+            }
+     } catch(Exception e){
+        e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor: " + e.getMessage());
-         }
+     }
+    }
 
-         
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id){
 
-        }*/
+        if(id != null){
+            rep_orderService.deleteById(id);
+            return ResponseEntity.ok("Registro Eliminado");
+        }
 
+        return ResponseEntity.badRequest().build(); 
+    }
 
 }
