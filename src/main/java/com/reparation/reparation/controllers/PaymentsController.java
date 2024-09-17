@@ -28,13 +28,13 @@ import com.reparation.reparation.service.IRep_orderService;
 @RequestMapping("/api/payments")
 public class PaymentsController {
     
-    private final IPaymentsService paymentsService; 
+    private final IPaymentsService paymentsService;
     private final IRep_orderService rep_orderService;
 
     @Autowired
-     public PaymentsController(IPaymentsService paymentsService, IRep_orderService rep_orderService) {
-          this.paymentsService = paymentsService;
-          this.rep_orderService = rep_orderService;
+    public PaymentsController(IPaymentsService paymentsService, IRep_orderService rep_orderService) {
+        this.paymentsService = paymentsService;
+        this.rep_orderService = rep_orderService;
         }
 
 
@@ -43,7 +43,7 @@ public class PaymentsController {
 
         Optional<Payments> paymentsOptional = paymentsService.findById(id);
 
-          if (paymentsOptional.isPresent()){             
+        if (paymentsOptional.isPresent()){
             Payments payments = paymentsOptional.get();
             Rep_order order = payments.getOrder();
             PaymentsDTO paymentsDTO = PaymentsDTO.builder()
@@ -63,7 +63,7 @@ public class PaymentsController {
     public ResponseEntity<?> findAll(){
         List<PaymentsDTO> paymentsList = paymentsService.findAll()
         .stream()
-         .map(payments -> {
+        .map(payments -> {
             Rep_order order = payments.getOrder();
             return PaymentsDTO.builder()
 
@@ -74,13 +74,13 @@ public class PaymentsController {
             .order_id(order.getId_order())
             .order_tot_pay(order.getTot_pay())
             .build();
-         })
-         .collect(Collectors.toList());
+        })
+        .collect(Collectors.toList());
         return ResponseEntity.ok(paymentsList);
     }
 
-     @PostMapping("/save")
-     public ResponseEntity<?> save(@RequestBody PaymentsDTO paymentsDTO) throws URISyntaxException{
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody PaymentsDTO paymentsDTO) throws URISyntaxException{
         
         if(paymentsDTO.getDate_pay().isBlank()){
             return ResponseEntity.badRequest().build();
@@ -92,7 +92,7 @@ public class PaymentsController {
         }
         Payments payments = Payments.builder().date_pay(paymentsDTO.getDate_pay())
             .money_pay(paymentsDTO.getMoney_pay())
-            .money_b_pay(paymentsDTO.getMoney_b_pay()) 
+            .money_b_pay(paymentsDTO.getMoney_b_pay())
             .order(rep_orderOptional.get())
         .build();
         paymentsService.save(payments);
@@ -105,7 +105,7 @@ public class PaymentsController {
         try {
             Optional<Payments> paymentsOptional = paymentsService.findById(id);
 
-         if(paymentsOptional.isPresent()){
+        if(paymentsOptional.isPresent()){
 
             Payments payments = paymentsOptional.get();
             payments.setDate_pay((paymentsDTO.getDate_pay()));
@@ -125,11 +125,11 @@ public class PaymentsController {
             return ResponseEntity.ok("Registro Actualizado");
             } else {
             return ResponseEntity.notFound().build();
-         }
-         } catch(Exception e){
+        }
+        } catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor: " + e.getMessage());
-         }
+        }
     }
 
     @DeleteMapping("/delete/{id}")

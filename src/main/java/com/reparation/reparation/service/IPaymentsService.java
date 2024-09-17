@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.reparation.reparation.entities.Payments;
 
 public interface IPaymentsService {
-     List<Payments> findAll();
+    List<Payments> findAll();
 
     Optional<Payments> findById(Long id_pay);
 

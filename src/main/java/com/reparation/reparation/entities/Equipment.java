@@ -10,6 +10,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -54,9 +56,12 @@ public class Equipment {
     @Column(name = "causa_de_daño")
     private String cau_dam_equip;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_customer")
+    private Customers customer;
+
     @Builder.Default
     @OneToMany(mappedBy="equipment", cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
     private List<Rep_order> rep_order_equipList = new ArrayList<>();
-
 
 }

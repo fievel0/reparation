@@ -19,13 +19,9 @@ import lombok.NoArgsConstructor;
 public class CustomerDTO {
     
     private Long id_customer;
-   
     private String name;
-   
     private String card_identifi;
-    
     private String phone;
-  
     private String mail;
     @Builder.Default
     private List<Rep_order> rep_orderList = new ArrayList<>();

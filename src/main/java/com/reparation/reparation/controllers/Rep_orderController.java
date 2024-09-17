@@ -37,13 +37,12 @@ public class Rep_orderController {
     @Autowired
     private IRep_orderService rep_orderService;
 
-     @Autowired
+    @Autowired
     private ICustomersService customerService;  // Servicio para manejar clientes
 
     @Autowired
     private IEquipmentService equipmentService;  // Servicio para manejar equipos
 
-   
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         Optional<Rep_order> rep_orderOptional = rep_orderService.findById(id);
@@ -80,8 +79,8 @@ public class Rep_orderController {
                 .build())
                 
                 .payments(rep_order.getPaymentsList().stream()
-                    .map(payment -> PaymentsDTO.builder()    
-                        .id_pay(payment.getId_pay())  
+                    .map(payment -> PaymentsDTO.builder()
+                        .id_pay(payment.getId_pay())
                         .date_pay(payment.getDate_pay())
                         .money_pay(payment.getMoney_pay())
                         .money_b_pay(payment.getMoney_b_pay())
@@ -92,7 +91,7 @@ public class Rep_orderController {
             return ResponseEntity.ok(rep_orderDTO);
         }
 
-        return ResponseEntity.notFound().build();     
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/findAll")
@@ -104,7 +103,7 @@ public class Rep_orderController {
                 Hibernate.initialize(rep_order.getPaymentsList());
 
                 return Rep_orderDTO.builder()
-                    .id_order(rep_order.getId_order()) 
+                    .id_order(rep_order.getId_order())
                     .create_date(rep_order.getCreate_date())
     
 
@@ -119,7 +118,7 @@ public class Rep_orderController {
                     .build())
 
                     .payments(rep_order.getPaymentsList().stream()
-                        .map(payment -> PaymentsDTO.builder()      
+                        .map(payment -> PaymentsDTO.builder()
                             .date_pay(payment.getDate_pay())
                         .build())
                         .collect(Collectors.toList()))
@@ -127,12 +126,11 @@ public class Rep_orderController {
             })
             .collect(Collectors.toList());
 
-        return ResponseEntity.ok(rep_orderList);     
-    }   
+        return ResponseEntity.ok(rep_orderList);
+    }
 
-  
     @PostMapping("/save")
-     public ResponseEntity<?> save(@RequestBody Rep_orderDTO orderDTO) throws URISyntaxException{
+    public ResponseEntity<?> save(@RequestBody Rep_orderDTO orderDTO) throws URISyntaxException{
         
         if (orderDTO.getCreate_date() == null) {
             return ResponseEntity.badRequest().body("La fecha de recepción es obligatoria");
@@ -174,7 +172,7 @@ public class Rep_orderController {
         try {
             Optional<Rep_order> repOrderOptional = rep_orderService.findById(id);
 
-         if(repOrderOptional.isPresent()){
+        if(repOrderOptional.isPresent()){
 
             Rep_order rep_order = repOrderOptional.get();
 
@@ -185,20 +183,20 @@ public class Rep_orderController {
             rep_order.setAddit_details(rep_orderDTO.getAddit_details());
             
            // Actualiza el cliente asociado
-           Optional<Customers> customerOptional = customerService.findById(rep_orderDTO.getCustomer().getId_customer());
-           if (customerOptional.isPresent()) {
-               Customers customer = customerOptional.get();
-               rep_order.setCustomer(customer);
-           } else {
-               return ResponseEntity.badRequest().body("Cliente no existe");
-           }
+        Optional<Customers> customerOptional = customerService.findById(rep_orderDTO.getCustomer().getId_customer());
+        if (customerOptional.isPresent()) {
+            Customers customer = customerOptional.get();
+            rep_order.setCustomer(customer);
+        } else {
+            return ResponseEntity.badRequest().body("Cliente no existe");
+        }
 
             // Actualiza el equipo asociado
-             Optional<Equipment> equipmentOptional = equipmentService.findById(rep_orderDTO.getEquipment().getId_equip());
+            Optional<Equipment> equipmentOptional = equipmentService.findById(rep_orderDTO.getEquipment().getId_equip());
             if (equipmentOptional.isPresent()) {
                 Equipment equipment = equipmentOptional.get();
-                 rep_order.setEquipment(equipment);
-             } else {
+                rep_order.setEquipment(equipment);
+            } else {
                 return ResponseEntity.badRequest().body("El Id del equipo no existe");
             }
         
@@ -206,12 +204,12 @@ public class Rep_orderController {
         rep_orderService.save(rep_order);
             return ResponseEntity.ok("Registro Actualizado");
             } else {
-                 return ResponseEntity.notFound().build();
+                return ResponseEntity.notFound().build();
             }
-     } catch(Exception e){
+    } catch(Exception e){
         e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor: " + e.getMessage());
-     }
+    }
     }
 
     @DeleteMapping("/delete/{id}")
@@ -222,7 +220,7 @@ public class Rep_orderController {
             return ResponseEntity.ok("Registro Eliminado");
         }
 
-        return ResponseEntity.badRequest().build(); 
+        return ResponseEntity.badRequest().build();
     }
 
 }

@@ -60,5 +60,4 @@ public class Rep_order {
     @OneToMany(mappedBy="order", cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
     @JsonIgnore
     private List<Payments> paymentsList = new ArrayList<>();
-   
 }
