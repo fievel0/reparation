@@ -48,6 +48,7 @@ public class Rep_order {
     //@Column(name = "foto")
     //private Object photo;
 
+
     @ManyToOne
     @JoinColumn(name="id_customers", nullable=false)
     private Customers customer;

@@ -43,12 +43,17 @@ public class Equipment {
     private String pass_equip;
     @Column(name = "antiguedad")
     private String anti_equip;
+    //En este campo se ingresan detalles como Bandejas, Chip-memoria, Batería-carcasa, Cargador o cables.
+    //******************************************************************************************** */
     @Column(name = "accesorios")
     private String accessor_equip;
+    //******************************************************************************************** */
+
     @Column(name = "reporte")
     private String reported_equip;
     @Column(name = "detalles_fisicos")
     private String detail_phy_equip;
+
     @Column(name = "calienta")
     private String temp_equip;
     @Column(name = "encendido_apagado")
