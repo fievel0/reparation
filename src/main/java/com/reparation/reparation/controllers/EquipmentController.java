@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reparation.reparation.controllers.dto.EquipmentDTO;
+import com.reparation.reparation.entities.Customers;
 import com.reparation.reparation.entities.Equipment;
+import com.reparation.reparation.service.ICustomersService;
 import com.reparation.reparation.service.IEquipmentService;
 
 @RestController
@@ -26,13 +29,16 @@ public class EquipmentController {
 
     @Autowired
     private IEquipmentService equipmentService;
+
+    @Autowired
+    private ICustomersService customersService;
     
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
 
         Optional<Equipment> equipmentOptional = equipmentService.findById(id);
 
-         if (equipmentOptional.isPresent()){
+        if (equipmentOptional.isPresent()){
             Equipment equipment = equipmentOptional.get();
 
             EquipmentDTO equipmentDTO = EquipmentDTO.builder()
@@ -49,6 +55,9 @@ public class EquipmentController {
                 .temp_equip(equipment.getTemp_equip())
                 .on_off_equip(equipment.isOn_off_equip())
                 .cau_dam_equip(equipment.getCau_dam_equip())
+
+                .id_customer(equipment.getCustomer() != null ? equipment.getCustomer().getId_customer() : null)
+                .name(equipment.getCustomer() != null ? equipment.getCustomer().getName() : null)
                 .build();
             return ResponseEntity.ok(equipmentDTO);
         }
@@ -59,7 +68,8 @@ public class EquipmentController {
     public ResponseEntity<?> findAll(){
         List<EquipmentDTO> equipmentList = equipmentService.findAll()
             .stream()
-            .map(equipment -> EquipmentDTO.builder()
+            .map(equipment -> {
+                EquipmentDTO dto = EquipmentDTO.builder()
                 .id_equip(equipment.getId_equip())
                 .model_equip(equipment.getModel_equip())
                 .brand_equip(equipment.getBrand_equip())
@@ -73,8 +83,14 @@ public class EquipmentController {
                 .temp_equip(equipment.getTemp_equip())
                 .on_off_equip(equipment.isOn_off_equip())
                 .cau_dam_equip(equipment.getCau_dam_equip())
-                .build())
-            .toList();
+                .id_customer(equipment.getCustomer() != null ? equipment.getCustomer().getId_customer() : null)
+                .name(equipment.getCustomer() != null ? equipment.getCustomer().getName() : null)
+
+                .build();
+                return  dto;
+            })
+            .collect(Collectors.toList());
+
         return ResponseEntity.ok(equipmentList);
     }
 
@@ -83,11 +99,17 @@ public class EquipmentController {
     public ResponseEntity<?> save(@RequestBody EquipmentDTO equipmentDTO) throws URISyntaxException{
 
         if(equipmentDTO.getModel_equip().isBlank()){
-
             return ResponseEntity.badRequest().build();
         }
 
-        equipmentService.save(Equipment.builder()
+        Optional<Customers> customerOptional = customersService.findById(equipmentDTO.getId_customer());
+
+        if(!customerOptional.isPresent()){
+            return ResponseEntity.badRequest().body("El cliente no existe");
+        }
+
+        Equipment equipment = Equipment.builder()
+        //equipmentService.save(Equipment.builder()
             .model_equip(equipmentDTO.getModel_equip())
             .brand_equip(equipmentDTO.getBrand_equip())
             .color_equip(equipmentDTO.getColor_equip())
@@ -100,18 +122,37 @@ public class EquipmentController {
             .temp_equip(equipmentDTO.getTemp_equip())
             .on_off_equip(equipmentDTO.isOn_off_equip())
             .cau_dam_equip(equipmentDTO.getCau_dam_equip())
-        .build());
+            .customer(customerOptional.get())
+        .build();
+
+        equipmentService.save(equipment);
 
         return ResponseEntity.created(new URI("/api/equipment/save")).build();
     }
 
+
+
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateEquipment(@PathVariable Long id, @RequestBody EquipmentDTO equipmentDTO){
         Optional<Equipment> equipmentOptional = equipmentService.findById(id);
+        
+        if (!equipmentOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
 
-        if(equipmentOptional.isPresent()){
+        Equipment equipment = equipmentOptional.get();
 
-            Equipment equipment = equipmentOptional.get();
+        if (equipmentDTO.getId_customer() != null) {
+            Optional<Customers> customerOptional = customersService.findById(equipmentDTO.getId_customer());
+            
+            if (!customerOptional.isPresent()) {
+                return ResponseEntity.badRequest().body("El cliente no existe");
+            }
+
+            
+            equipment.setCustomer(customerOptional.get());
+        }
+
             equipment.setModel_equip(equipmentDTO.getModel_equip());
             equipment.setBrand_equip(equipmentDTO.getBrand_equip());
             equipment.setColor_equip(equipmentDTO.getColor_equip());
@@ -127,8 +168,8 @@ public class EquipmentController {
             equipmentService.save(equipment);
             return ResponseEntity.ok("Registro Actualizado");
         }
-        return ResponseEntity.notFound().build();
-    }
+        
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id){

@@ -43,10 +43,14 @@ public class Customers {
     private String mail;
 
     
+    
     @Builder.Default
-
     @OneToMany(mappedBy="customer", cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, orphanRemoval=true)
     @JsonIgnore
     private List<Rep_order> rep_orderList = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy="customer", cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, orphanRemoval=true)
+    private List<Equipment> equipmentList = new ArrayList<>();
 
 }

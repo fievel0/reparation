@@ -10,6 +10,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -41,12 +43,17 @@ public class Equipment {
     private String pass_equip;
     @Column(name = "antiguedad")
     private String anti_equip;
+    //En este campo se ingresan detalles como Bandejas, Chip-memoria, Batería-carcasa, Cargador o cables.
+    //******************************************************************************************** */
     @Column(name = "accesorios")
     private String accessor_equip;
+    //******************************************************************************************** */
+
     @Column(name = "reporte")
     private String reported_equip;
     @Column(name = "detalles_fisicos")
     private String detail_phy_equip;
+
     @Column(name = "calienta")
     private String temp_equip;
     @Column(name = "encendido_apagado")
@@ -54,9 +61,12 @@ public class Equipment {
     @Column(name = "causa_de_daño")
     private String cau_dam_equip;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_customer")
+    private Customers customer;
+
     @Builder.Default
     @OneToMany(mappedBy="equipment", cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
     private List<Rep_order> rep_order_equipList = new ArrayList<>();
-
 
 }

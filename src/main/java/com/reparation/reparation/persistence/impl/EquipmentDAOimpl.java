@@ -15,10 +15,9 @@ public class EquipmentDAOimpl implements IEquipmentDAO{
     
     @Autowired
     private EquipmentRepository equipmentRepository;
-   
     @Override
     public List<Equipment> findAll() {
-         return (List<Equipment>) equipmentRepository.findAll();
+        return (List<Equipment>) equipmentRepository.findAll();
     }
 
     @Override

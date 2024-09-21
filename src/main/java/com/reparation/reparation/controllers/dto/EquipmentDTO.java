@@ -42,6 +42,11 @@ public class EquipmentDTO {
     private boolean on_off_equip;
 
     private String cau_dam_equip;
+
+    private Long id_customer;
+
+    private String name;
+
     @Builder.Default
     private List<Rep_order> rep_order_equipList = new ArrayList<>();
 
