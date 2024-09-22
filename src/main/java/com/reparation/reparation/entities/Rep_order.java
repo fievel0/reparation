@@ -69,5 +69,6 @@ public class Rep_order {
 
     @ManyToOne
     @JoinColumn(name="idEmployee", nullable = false)
+    @JsonIgnore
     private Employee employee;
 }
