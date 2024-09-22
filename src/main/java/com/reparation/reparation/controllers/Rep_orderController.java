@@ -20,13 +20,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reparation.reparation.controllers.dto.CustomerDTO;
+import com.reparation.reparation.controllers.dto.EmployeeDTO;
 import com.reparation.reparation.controllers.dto.EquipmentDTO;
 import com.reparation.reparation.controllers.dto.PaymentsDTO;
 import com.reparation.reparation.controllers.dto.Rep_orderDTO;
 import com.reparation.reparation.entities.Customers;
+import com.reparation.reparation.entities.Employee;
 import com.reparation.reparation.entities.Equipment;
 import com.reparation.reparation.entities.Rep_order;
 import com.reparation.reparation.service.ICustomersService;
+import com.reparation.reparation.service.IEmployeeService;
 import com.reparation.reparation.service.IEquipmentService;
 import com.reparation.reparation.service.IRep_orderService;
 
@@ -42,6 +45,9 @@ public class Rep_orderController {
 
     @Autowired
     private IEquipmentService equipmentService;  // Servicio para manejar equipos
+
+    @Autowired
+    private IEmployeeService employeeService; // Servicio para manejar empleados
 
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
@@ -87,6 +93,10 @@ public class Rep_orderController {
                     .build())
                 .collect(Collectors.toList()))
 
+                .employee(EmployeeDTO.builder()
+                .nameEmployee(rep_order.getEmployee().getNameEmployee())
+                .build())
+
                 .build();
             return ResponseEntity.ok(rep_orderDTO);
         }
@@ -122,16 +132,23 @@ public class Rep_orderController {
                             .date_pay(payment.getDate_pay())
                         .build())
                         .collect(Collectors.toList()))
+                    
+                        .employee(EmployeeDTO.builder()
+                        .idEmployee(rep_order.getEmployee().getIdEmployee())
+                        .nameEmployee(rep_order.getEmployee().getNameEmployee())
+                        .build())
+                    
                     .build();
+
             })
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(rep_orderList);
     }
+    
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody Rep_orderDTO orderDTO) throws URISyntaxException{
-        
         if (orderDTO.getCreate_date() == null) {
             return ResponseEntity.badRequest().body("La fecha de recepción es obligatoria");
         }
@@ -145,10 +162,18 @@ public class Rep_orderController {
 
         // Verifica si el equipo con el id proporcionado existe
         Optional<Equipment> optionalEquipment = equipmentService.findById(orderDTO.getEquipment().getId_equip());
+       
         if (!optionalEquipment.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipo no existe, por favor verifique su ID");
         }
         Equipment equipment = optionalEquipment.get();
+
+        Optional<Employee> optionalEmployee = employeeService.findById(orderDTO.getEmployee().getIdEmployee());
+        if(!optionalEmployee.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El empleado ingresado no existe");
+        }
+
+        Employee employee = optionalEmployee.get();
 
         // Construye el objeto Rep_order utilizando el builder
         Rep_order repOrder = Rep_order.builder()
@@ -158,6 +183,7 @@ public class Rep_orderController {
             .addit_details(orderDTO.getAddit_details())
             .customer(customer)
             .equipment(equipment)
+            .employee(employee)
             
         .build();
 
@@ -199,7 +225,15 @@ public class Rep_orderController {
             } else {
                 return ResponseEntity.badRequest().body("El Id del equipo no existe");
             }
-        
+
+            //Actualiza el Empleado asociado
+            Optional<Employee> employeeOptional = employeeService.findById(rep_orderDTO.getEmployee().getIdEmployee());
+            if(employeeOptional.isPresent()){
+                Employee employee = employeeOptional.get();
+                rep_order.setEmployee(employee);
+            } else {
+                return ResponseEntity.badRequest().body("El Id del empleado no existe");
+            }
         // Guarda el objeto actualizado
         rep_orderService.save(rep_order);
             return ResponseEntity.ok("Registro Actualizado");

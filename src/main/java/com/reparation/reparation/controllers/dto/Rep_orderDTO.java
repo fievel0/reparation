@@ -17,6 +17,7 @@ public class Rep_orderDTO {
     private Long id_order;
 
     private Date create_date;
+    
     private Date deadline;
     
     private BigDecimal tot_pay;
@@ -28,5 +29,7 @@ public class Rep_orderDTO {
     private EquipmentDTO equipment;
 
     private List<PaymentsDTO> payments;
+
+    private EmployeeDTO employee;
 
 }
