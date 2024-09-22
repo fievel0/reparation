@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,12 +33,17 @@ public class Equipment {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id_equip;
     @Column(name = "modelo")
+    @NotNull
     private String model_equip;
+    
     @Column(name = "marca")
+    @NotNull
     private String brand_equip;
     @Column(name = "color")
+    @NotNull
     private String color_equip;
     @Column(name = "estado_equipo")
+    @NotNull
     private String state_equip;
     @Column(name = "clave_equipo")
     private String pass_equip;
@@ -50,6 +56,7 @@ public class Equipment {
     //******************************************************************************************** */
 
     @Column(name = "reporte")
+    @NotNull
     private String reported_equip;
     @Column(name = "detalles_fisicos")
     private String detail_phy_equip;
