@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,14 +15,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -31,6 +31,7 @@ public class Customers {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id_customer;
+    @NonNull
     @Column(name = "nombre")
     private String name;
     @Column(name = "cedula")
@@ -39,6 +40,7 @@ public class Customers {
     private String phone;
   //  @Column(name = "firma")
    // private Object signature;
+    @Email
     @Column(name = "correo")
     private String mail;
 

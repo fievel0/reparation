@@ -18,6 +18,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,10 +40,14 @@ public class Rep_order {
 
     @Column(name = "fecha_recepcion")
     private Date create_date;
+    
     @Column(name = "fecha_entrega")
+    @Future
     private Date deadline;
+    
     @Column(name = "total_pago")
     private BigDecimal tot_pay;
+    
     @Column(name = "detalles_adicionales")
     private String addit_details;
     //@Column(name = "foto")
@@ -61,4 +66,8 @@ public class Rep_order {
     @OneToMany(mappedBy="order", cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
     @JsonIgnore
     private List<Payments> paymentsList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name="idEmployee", nullable = false)
+    private Employee employee;
 }
