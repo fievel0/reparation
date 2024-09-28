@@ -35,7 +35,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
                         .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .requestMatchers("/api/**").permitAll() // Permite acceso a todos los endpoints de API
+                        //.requestMatchers("/api/**").permitAll() // Permite acceso a todos los endpoints de API
                         .anyRequest()
                         .authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
