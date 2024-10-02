@@ -1,6 +1,7 @@
 package com.reparation.reparation.controllers.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +17,9 @@ import lombok.NoArgsConstructor;
 public class Rep_orderDTO {
     private Long id_order;
 
-    private Date create_date;
+    private LocalDate create_date;
     
-    private Date deadline;
+    private LocalDate deadline;
     
     private BigDecimal tot_pay;
     
