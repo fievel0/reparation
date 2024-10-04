@@ -64,7 +64,7 @@ public class Rep_orderController {
 
                 .customer(CustomerDTO.builder()
                     .name(rep_order.getCustomer().getName())
-                    .card_identifi(rep_order.getCustomer().getCard_identifi())
+                    .cardIdentifi(rep_order.getCustomer().getCardIdentifi())
                     .phone(rep_order.getCustomer().getPhone())
                     .mail(rep_order.getCustomer().getMail())
                 .build())

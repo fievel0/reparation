@@ -2,10 +2,13 @@ package com.reparation.reparation.controllers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.reparation.reparation.controllers.dto.CustomerDTO;
 import com.reparation.reparation.entities.Customers;
 import com.reparation.reparation.service.ICustomersService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/customer")
@@ -26,26 +31,48 @@ public class CustomersController {
     
     @Autowired
     private ICustomersService customerService;
+    
+    
+@GetMapping("/cedula/{cardIdentifi}")
+/***********************BUSQUEDA DE CLIENTES POR CEDULA******************************************* */
+public ResponseEntity<?> getCustomersByCardIdentifi(@PathVariable("cardIdentifi") String cardIdentifi) {
+    Optional<Customers> customerOptional = customerService.findByCardIdentifi(cardIdentifi);
+    
+    if (customerOptional.isPresent()){
+        Customers customer = customerOptional.get();
+
+        CustomerDTO customerDTO = CustomerDTO.builder()
+            .id_customer(customer.getId_customer())
+            .name(customer.getName())
+            .cardIdentifi(customer.getCardIdentifi())
+            .phone(customer.getPhone())
+            .mail(customer.getMail())
+            .build();
+        return ResponseEntity.ok(customerDTO);
+    }
+    return ResponseEntity.notFound().build();
+}
+
+
+    
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         Optional<Customers> customerOptional = customerService.findById(id);
-
         if (customerOptional.isPresent()){
             Customers customer = customerOptional.get();
 
             CustomerDTO customerDTO = CustomerDTO.builder()
                 .id_customer(customer.getId_customer())
                 .name(customer.getName())
-                .card_identifi(customer.getCard_identifi())
+                .cardIdentifi(customer.getCardIdentifi())
                 .phone(customer.getPhone())
                 .mail(customer.getMail())
                 .build();
-
             return ResponseEntity.ok(customerDTO);
         }
-
         return ResponseEntity.notFound().build();
     }
+
 
     @GetMapping
     public ResponseEntity<?> getAllCustomers() {
@@ -59,7 +86,7 @@ public class CustomersController {
             .map(customer -> CustomerDTO.builder()
                 .id_customer(customer.getId_customer())
                 .name(customer.getName())
-                .card_identifi(customer.getCard_identifi())
+                .cardIdentifi(customer.getCardIdentifi())
                 .phone(customer.getPhone())
                 .mail(customer.getMail())
                 .build())
@@ -77,7 +104,7 @@ public class CustomersController {
 
         customerService.save(Customers.builder()
         .name(customerDTO.getName())
-        .card_identifi(customerDTO.getCard_identifi())
+        .cardIdentifi(customerDTO.getCardIdentifi())
         .phone(customerDTO.getPhone())
         .mail(customerDTO.getMail())
         .build());
@@ -93,7 +120,7 @@ public class CustomersController {
 
             Customers customer = customerOptional.get();
             customer.setName(customerDTO.getName());
-            customer.setCard_identifi(customerDTO.getCard_identifi());
+            customer.setCardIdentifi(customerDTO.getCardIdentifi());
             customer.setPhone(customerDTO.getPhone());
             customer.setMail(customerDTO.getMail());
             customerService.save(customer);
@@ -111,7 +138,5 @@ public class CustomersController {
         }
 
         return ResponseEntity.badRequest().build();
-    }
-
-    
+    }  
 }

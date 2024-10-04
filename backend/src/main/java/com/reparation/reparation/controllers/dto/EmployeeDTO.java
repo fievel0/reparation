@@ -20,6 +20,12 @@ public class EmployeeDTO {
     private String nameEmployee;
 
     private String positionEmployee;
+
+    private String cedEmployee;
+    
+    private String dirEmployee;
+    
+    private String telEmpployee;
     
     private List<Rep_orderDTO> orders;
 }

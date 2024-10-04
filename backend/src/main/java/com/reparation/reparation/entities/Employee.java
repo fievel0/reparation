@@ -32,6 +32,12 @@ public class Employee {
     private String nameEmployee;
     @NotNull
     private String positionEmployee;
+    @NotNull
+    private String cedEmployee;
+    @NotNull
+    private String dirEmployee;
+    @NotNull
+    private String telEmpployee;
 
     @Builder.Default
     @OneToMany(mappedBy="employee", cascade=CascadeType.ALL, fetch=FetchType.LAZY)

@@ -9,6 +9,8 @@ public interface ICustomersDAO {
 
     List<Customers> findAll();
 
+    Optional<Customers> findByCardIdentifi(String cardIdentifi);
+
     Optional<Customers> findById(Long id_customer);
 
     void save(Customers customer);

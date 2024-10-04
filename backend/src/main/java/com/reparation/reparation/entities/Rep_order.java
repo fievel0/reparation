@@ -1,8 +1,8 @@
 package com.reparation.reparation.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,11 +39,11 @@ public class Rep_order {
     private Long id_order;
 
     @Column(name = "fecha_recepcion")
-    private Date create_date;
+    private LocalDate create_date;
     
     @Column(name = "fecha_entrega")
     @Future
-    private Date deadline;
+    private LocalDate deadline;
     
     @Column(name = "total_pago")
     private BigDecimal tot_pay;

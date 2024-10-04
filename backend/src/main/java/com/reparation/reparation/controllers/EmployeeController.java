@@ -41,6 +41,9 @@ public class EmployeeController {
                 .idEmployee(employee.getIdEmployee())
                 .nameEmployee(employee.getNameEmployee())
                 .positionEmployee(employee.getPositionEmployee())
+                .cedEmployee(employee.getCedEmployee())
+                .dirEmployee(employee.getDirEmployee())
+                .telEmpployee(employee.getTelEmpployee())
                 .orders(employee.getOrders().stream()
                     .map(order -> Rep_orderDTO.builder()
                         .id_order(order.getId_order())
@@ -64,6 +67,9 @@ public class EmployeeController {
             .idEmployee(employee.getIdEmployee())
             .nameEmployee(employee.getNameEmployee())
             .positionEmployee(employee.getPositionEmployee())
+            .cedEmployee(employee.getCedEmployee())
+            .dirEmployee(employee.getDirEmployee())
+            .telEmpployee(employee.getTelEmpployee())
             .orders(employee.getOrders().stream()
                 .map(order -> Rep_orderDTO.builder()
                     .id_order(order.getId_order())
@@ -88,6 +94,9 @@ public class EmployeeController {
         employeeService.save(Employee.builder()
         .nameEmployee(employeeDTO.getNameEmployee())
         .positionEmployee(employeeDTO.getPositionEmployee())
+        .cedEmployee(employeeDTO.getCedEmployee())
+        .dirEmployee(employeeDTO.getDirEmployee())
+        .telEmpployee(employeeDTO.getTelEmpployee())
         .build());
 
         return ResponseEntity.created(new URI("/api/employee/save")).build();
@@ -103,6 +112,9 @@ public class EmployeeController {
             Employee employee = employeeOptional.get();
             employee.setNameEmployee(employeeDTO.getNameEmployee());
             employee.setPositionEmployee(employeeDTO.getPositionEmployee());
+            employee.setCedEmployee(employeeDTO.getCedEmployee());
+            employee.setDirEmployee(employeeDTO.getDirEmployee());
+            employee.setTelEmpployee(employeeDTO.getTelEmpployee());
             employeeService.save(employee);
             return ResponseEntity.ok("Registro Actualizado");
         }

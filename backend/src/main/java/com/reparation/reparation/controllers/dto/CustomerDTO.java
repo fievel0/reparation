@@ -20,7 +20,7 @@ public class CustomerDTO {
     
     private Long id_customer;
     private String name;
-    private String card_identifi;
+    private String cardIdentifi;
     private String phone;
     private String mail;
     @Builder.Default

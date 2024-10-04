@@ -22,6 +22,10 @@ public class CustomerServiceimpl implements ICustomersService{
         return customersDAO.findAll();
     }
 
+    public Optional<Customers> findByCardIdentifi(String cardIdentifi){
+        return customersDAO.findByCardIdentifi(cardIdentifi);
+    }
+
     @Override
     public Optional<Customers> findById(Long id_customer) {
         return customersDAO.findById(id_customer);
