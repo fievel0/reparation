@@ -11,6 +11,8 @@ public interface IRep_orderDAO {
 
     Optional<Rep_order> findById(Long id_order);
 
+    Optional<Rep_order> findLastIdOrder();  // Nuevo método
+
     void save(Rep_order rep_order);
 
     void deleteById(Long id_order);

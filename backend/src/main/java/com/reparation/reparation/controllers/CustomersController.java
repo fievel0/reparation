@@ -2,13 +2,11 @@ package com.reparation.reparation.controllers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.reparation.reparation.controllers.dto.CustomerDTO;
 import com.reparation.reparation.entities.Customers;
 import com.reparation.reparation.service.ICustomersService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -54,7 +51,7 @@ public ResponseEntity<?> getCustomersByCardIdentifi(@PathVariable("cardIdentifi"
 }
 
 
-    
+    /***********************BUSQUEDA DE CLIENTES POR ID******************************************* */    
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         Optional<Customers> customerOptional = customerService.findById(id);
@@ -79,10 +76,12 @@ public ResponseEntity<?> getCustomersByCardIdentifi(@PathVariable("cardIdentifi"
         return findAll(); // Llama al método findAll() para obtener la lista de clientes
     }
 
+    /***********************listado de todos los clientes ordenados en forma alfabetica******************************************* */
     @GetMapping("/findAll")
     public ResponseEntity<?> findAll(){
         List<CustomerDTO> customerList = customerService.findAll()
             .stream()
+            .sorted(Comparator.comparing(Customers::getName)) // Ordenar por nombre
             .map(customer -> CustomerDTO.builder()
                 .id_customer(customer.getId_customer())
                 .name(customer.getName())
@@ -97,10 +96,17 @@ public ResponseEntity<?> getCustomersByCardIdentifi(@PathVariable("cardIdentifi"
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody CustomerDTO customerDTO) throws URISyntaxException{
 
-        if(customerDTO.getName().isEmpty()){
+    // Verificar si el campo cardIdentifi está vacío
+    if (customerDTO.getName().isEmpty()) {
+        return ResponseEntity.badRequest().body("El nombre del cliente no puede estar vacío.");
+    } 
 
-            return ResponseEntity.badRequest().build();
-        }
+
+       // Verificar si ya existe un cliente con el mismo cardIdentifi
+       Optional<Customers> existingCustomer = customerService.findByCardIdentifi(customerDTO.getCardIdentifi());
+       if (existingCustomer.isPresent()) {
+           return ResponseEntity.badRequest().body("LA CEDULA DEL CLIENTE QUE INTENTA GUARDAR YA EXISTE!!!");
+       }
 
         customerService.save(Customers.builder()
         .name(customerDTO.getName())
@@ -111,6 +117,8 @@ public ResponseEntity<?> getCustomersByCardIdentifi(@PathVariable("cardIdentifi"
 
         return ResponseEntity.created(new URI("/api/customer/save")).build();
     }
+
+
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateCustomers(@PathVariable Long id, @RequestBody CustomerDTO customerDTO){
