@@ -12,6 +12,8 @@ public interface ICustomersService {
 
     Optional<Customers> findById(Long id_customer);
 
+    Optional<Customers> findByCardIdentifi(String cardIdentifi);
+
     ResponseEntity<?> save(Customers customer);
 
     void deleteById(Long id_customer);

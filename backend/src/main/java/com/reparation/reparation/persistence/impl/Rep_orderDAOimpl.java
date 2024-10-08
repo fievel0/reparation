@@ -26,6 +26,11 @@ public class Rep_orderDAOimpl implements IRep_orderDAO {
     }
 
     @Override
+    public Optional<Rep_order> findLastIdOrder() {
+        return rep_orderRepository.findLastIdOrder();
+    }
+
+    @Override
     public void save(Rep_order rep_order) {
         rep_orderRepository.save(rep_order);
     }

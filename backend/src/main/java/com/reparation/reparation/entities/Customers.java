@@ -35,7 +35,7 @@ public class Customers {
     @Column(name = "nombre")
     private String name;
     @Column(name = "cedula")
-    private String card_identifi;
+    private String cardIdentifi;
     @Column(name = "telefono")
     private String phone;
   //  @Column(name = "firma")
@@ -43,8 +43,6 @@ public class Customers {
     @Email
     @Column(name = "correo")
     private String mail;
-
-    
     
     @Builder.Default
     @OneToMany(mappedBy="customer", cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, orphanRemoval=true)

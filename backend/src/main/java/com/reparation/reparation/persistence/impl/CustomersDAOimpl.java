@@ -15,6 +15,11 @@ public class CustomersDAOimpl implements ICustomersDAO{
     
     @Autowired
     private CustomersRepository customersRepository;
+
+    @Override
+    public Optional<Customers> findByCardIdentifi(String cardIdentifi) {
+        return customersRepository.findByCardIdentifi(cardIdentifi); // Implementación del método
+    }
     
     @Override
     public List<Customers> findAll() {

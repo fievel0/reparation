@@ -2,6 +2,7 @@ package com.reparation.reparation.controllers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,46 +21,71 @@ import com.reparation.reparation.controllers.dto.CustomerDTO;
 import com.reparation.reparation.entities.Customers;
 import com.reparation.reparation.service.ICustomersService;
 
+
 @RestController
 @RequestMapping("/api/customer")
 public class CustomersController {
     
     @Autowired
     private ICustomersService customerService;
+    
+    
+@GetMapping("/cedula/{cardIdentifi}")
+/***********************BUSQUEDA DE CLIENTES POR CEDULA******************************************* */
+public ResponseEntity<?> getCustomersByCardIdentifi(@PathVariable("cardIdentifi") String cardIdentifi) {
+    Optional<Customers> customerOptional = customerService.findByCardIdentifi(cardIdentifi);
+    
+    if (customerOptional.isPresent()){
+        Customers customer = customerOptional.get();
+
+        CustomerDTO customerDTO = CustomerDTO.builder()
+            .id_customer(customer.getId_customer())
+            .name(customer.getName())
+            .cardIdentifi(customer.getCardIdentifi())
+            .phone(customer.getPhone())
+            .mail(customer.getMail())
+            .build();
+        return ResponseEntity.ok(customerDTO);
+    }
+    return ResponseEntity.notFound().build();
+}
+
+
+    /***********************BUSQUEDA DE CLIENTES POR ID******************************************* */    
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         Optional<Customers> customerOptional = customerService.findById(id);
-
         if (customerOptional.isPresent()){
             Customers customer = customerOptional.get();
 
             CustomerDTO customerDTO = CustomerDTO.builder()
                 .id_customer(customer.getId_customer())
                 .name(customer.getName())
-                .card_identifi(customer.getCard_identifi())
+                .cardIdentifi(customer.getCardIdentifi())
                 .phone(customer.getPhone())
                 .mail(customer.getMail())
                 .build();
-
             return ResponseEntity.ok(customerDTO);
         }
-
         return ResponseEntity.notFound().build();
     }
+
 
     @GetMapping
     public ResponseEntity<?> getAllCustomers() {
         return findAll(); // Llama al método findAll() para obtener la lista de clientes
     }
 
+    /***********************listado de todos los clientes ordenados en forma alfabetica******************************************* */
     @GetMapping("/findAll")
     public ResponseEntity<?> findAll(){
         List<CustomerDTO> customerList = customerService.findAll()
             .stream()
+            .sorted(Comparator.comparing(Customers::getName)) // Ordenar por nombre
             .map(customer -> CustomerDTO.builder()
                 .id_customer(customer.getId_customer())
                 .name(customer.getName())
-                .card_identifi(customer.getCard_identifi())
+                .cardIdentifi(customer.getCardIdentifi())
                 .phone(customer.getPhone())
                 .mail(customer.getMail())
                 .build())
@@ -70,20 +96,29 @@ public class CustomersController {
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody CustomerDTO customerDTO) throws URISyntaxException{
 
-        if(customerDTO.getName().isEmpty()){
+    // Verificar si el campo cardIdentifi está vacío
+    if (customerDTO.getName().isEmpty()) {
+        return ResponseEntity.badRequest().body("El nombre del cliente no puede estar vacío.");
+    } 
 
-            return ResponseEntity.badRequest().build();
-        }
+
+       // Verificar si ya existe un cliente con el mismo cardIdentifi
+       Optional<Customers> existingCustomer = customerService.findByCardIdentifi(customerDTO.getCardIdentifi());
+       if (existingCustomer.isPresent()) {
+           return ResponseEntity.badRequest().body("LA CEDULA DEL CLIENTE QUE INTENTA GUARDAR YA EXISTE!!!");
+       }
 
         customerService.save(Customers.builder()
         .name(customerDTO.getName())
-        .card_identifi(customerDTO.getCard_identifi())
+        .cardIdentifi(customerDTO.getCardIdentifi())
         .phone(customerDTO.getPhone())
         .mail(customerDTO.getMail())
         .build());
 
         return ResponseEntity.created(new URI("/api/customer/save")).build();
     }
+
+
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateCustomers(@PathVariable Long id, @RequestBody CustomerDTO customerDTO){
@@ -93,7 +128,7 @@ public class CustomersController {
 
             Customers customer = customerOptional.get();
             customer.setName(customerDTO.getName());
-            customer.setCard_identifi(customerDTO.getCard_identifi());
+            customer.setCardIdentifi(customerDTO.getCardIdentifi());
             customer.setPhone(customerDTO.getPhone());
             customer.setMail(customerDTO.getMail());
             customerService.save(customer);
@@ -111,7 +146,5 @@ public class CustomersController {
         }
 
         return ResponseEntity.badRequest().build();
-    }
-
-    
+    }  
 }

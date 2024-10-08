@@ -10,7 +10,11 @@ public interface IRep_orderService {
 
     Optional<Rep_order> findById(Long id);
 
+    Optional<Rep_order> findLast();
+
     void save(Rep_order rep_order);
 
     void deleteById(Long id_order);
+
+    
 }
