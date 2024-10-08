@@ -158,32 +158,6 @@ public ResponseEntity<?> findLast() {
         // Convierte el objeto a DTO
         Rep_orderDTO rep_orderDTO = Rep_orderDTO.builder()
             .id_order(rep_order.getId_order())
-            .create_date(rep_order.getCreate_date())
-            .deadline(rep_order.getDeadline())
-            .tot_pay(rep_order.getTot_pay())
-            .addit_details(rep_order.getAddit_details())
-
-            .customer(CustomerDTO.builder()
-                .id_customer(rep_order.getCustomer().getId_customer())
-                .name(rep_order.getCustomer().getName())
-            .build())
-
-            .equipment(EquipmentDTO.builder()
-                .id_equip(rep_order.getEquipment().getId_equip())
-                .model_equip(rep_order.getEquipment().getModel_equip())
-            .build())
-
-            .payments(rep_order.getPaymentsList().stream()
-                .map(payment -> PaymentsDTO.builder()
-                    .date_pay(payment.getDate_pay())
-                .build())
-                .collect(Collectors.toList()))
-
-            .employee(EmployeeDTO.builder()
-                .idEmployee(rep_order.getEmployee().getIdEmployee())
-                .nameEmployee(rep_order.getEmployee().getNameEmployee())
-            .build())
-
         .build();
 
         return ResponseEntity.ok(rep_orderDTO);
