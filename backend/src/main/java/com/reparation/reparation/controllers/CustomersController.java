@@ -119,7 +119,6 @@ public ResponseEntity<?> getCustomersByCardIdentifi(@PathVariable("cardIdentifi"
     }
 
 
-
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateCustomers(@PathVariable Long id, @RequestBody CustomerDTO customerDTO){
         Optional<Customers> customerOptional = customerService.findById(id);

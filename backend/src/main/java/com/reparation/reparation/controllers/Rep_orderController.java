@@ -221,7 +221,6 @@ public ResponseEntity<?> findLast() {
 
             Rep_order rep_order = repOrderOptional.get();
 
-
             rep_order.setCreate_date(rep_order.getCreate_date());
             rep_order.setDeadline(rep_orderDTO.getDeadline());
             rep_order.setTot_pay(rep_orderDTO.getTot_pay());

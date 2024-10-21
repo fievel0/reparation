@@ -2,6 +2,7 @@ package com.reparation.reparation.controllers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -125,9 +126,11 @@ public class EquipmentController {
             .customer(customerOptional.get())
         .build();
 
-        equipmentService.save(equipment);
+        Equipment savedEquipment = equipmentService.save(equipment);
 
-        return ResponseEntity.created(new URI("/api/equipment/save")).build();
+        URI location = new URI("/api/equipment/save" + savedEquipment.getId_equip());
+
+        return ResponseEntity.created(location).body(Collections.singletonMap("id", savedEquipment.getId_equip()));
     }
 
 

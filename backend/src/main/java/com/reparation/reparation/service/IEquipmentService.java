@@ -15,7 +15,7 @@ public interface IEquipmentService {
     //List<Equipment> findByAntiguedadInRange(BigDecimal minanti_equip, BigDecimal maxanti_equip);
     //esto es para los Query Methods
 
-    void save(Equipment equipment);
+    Equipment save(Equipment equipment);
 
     void deleteById(Long id_equip);
 }
