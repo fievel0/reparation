@@ -8,10 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.reparation.reparation.entities.Equipment;
 import com.reparation.reparation.persistence.IEquipmentDAO;
+import com.reparation.reparation.repository.EquipmentRepository;
 import com.reparation.reparation.service.IEquipmentService;
 
 @Service
 public class EquipmentServiceimpl implements IEquipmentService {
+
+    @Autowired
+    private EquipmentRepository equipmentRepository;
 
     @Autowired
     private IEquipmentDAO equipmentDAO;
@@ -27,8 +31,8 @@ public class EquipmentServiceimpl implements IEquipmentService {
     }
 
     @Override
-    public void save(Equipment equipment) {
-        equipmentDAO.save(equipment);
+    public Equipment save(Equipment equipment) {
+        return equipmentRepository.save(equipment);
     }
 
     @Override
