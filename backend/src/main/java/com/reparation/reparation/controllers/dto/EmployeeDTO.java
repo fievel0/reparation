@@ -25,7 +25,7 @@ public class EmployeeDTO {
     
     private String dirEmployee;
     
-    private String telEmpployee;
+    private String telEmployee;
     
     private List<Rep_orderDTO> orders;
 }

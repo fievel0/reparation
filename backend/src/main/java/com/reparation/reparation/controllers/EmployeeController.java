@@ -43,7 +43,7 @@ public class EmployeeController {
                 .positionEmployee(employee.getPositionEmployee())
                 .cedEmployee(employee.getCedEmployee())
                 .dirEmployee(employee.getDirEmployee())
-                .telEmpployee(employee.getTelEmpployee())
+                .telEmployee(employee.getTelEmployee())
                 .orders(employee.getOrders().stream()
                     .map(order -> Rep_orderDTO.builder()
                         .id_order(order.getId_order())
@@ -69,7 +69,7 @@ public class EmployeeController {
             .positionEmployee(employee.getPositionEmployee())
             .cedEmployee(employee.getCedEmployee())
             .dirEmployee(employee.getDirEmployee())
-            .telEmpployee(employee.getTelEmpployee())
+            .telEmployee(employee.getTelEmployee())
             .orders(employee.getOrders().stream()
                 .map(order -> Rep_orderDTO.builder()
                     .id_order(order.getId_order())
@@ -96,7 +96,7 @@ public class EmployeeController {
         .positionEmployee(employeeDTO.getPositionEmployee())
         .cedEmployee(employeeDTO.getCedEmployee())
         .dirEmployee(employeeDTO.getDirEmployee())
-        .telEmpployee(employeeDTO.getTelEmpployee())
+        .telEmployee(employeeDTO.getTelEmployee())
         .build());
 
         return ResponseEntity.created(new URI("/api/employee/save")).build();
@@ -114,7 +114,7 @@ public class EmployeeController {
             employee.setPositionEmployee(employeeDTO.getPositionEmployee());
             employee.setCedEmployee(employeeDTO.getCedEmployee());
             employee.setDirEmployee(employeeDTO.getDirEmployee());
-            employee.setTelEmpployee(employeeDTO.getTelEmpployee());
+            employee.setTelEmployee(employeeDTO.getTelEmployee());
             employeeService.save(employee);
             return ResponseEntity.ok("Registro Actualizado");
         }

@@ -2,10 +2,6 @@ package com.reparation.reparation.controllers.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-<<<<<<< HEAD
-import java.util.Date;
-=======
->>>>>>> e1e489fe3e28ba0974d370611032cfed2aad9b5d
 import java.util.List;
 
 import lombok.AllArgsConstructor;

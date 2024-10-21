@@ -37,7 +37,7 @@ public class Employee {
     @NotNull
     private String dirEmployee;
     @NotNull
-    private String telEmpployee;
+    private String telEmployee;
 
     @Builder.Default
     @OneToMany(mappedBy="employee", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
