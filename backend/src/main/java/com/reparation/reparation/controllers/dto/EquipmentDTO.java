@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.reparation.reparation.entities.EcondE;
 import com.reparation.reparation.entities.Rep_order;
 
 import lombok.AllArgsConstructor;
@@ -43,7 +44,7 @@ public class EquipmentDTO {
 
     private String cau_dam_equip;
 
-    private String condEquip;
+    private EcondE condEquip;
 
     private Long id_customer;
 
