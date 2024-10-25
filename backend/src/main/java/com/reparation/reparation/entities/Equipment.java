@@ -68,6 +68,9 @@ public class Equipment {
     @Column(name = "causa_de_daño")
     private String cau_dam_equip;
 
+    @Column(name = "condicion_del_equipo")
+    private String condEquip;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer")
     private Customers customer;

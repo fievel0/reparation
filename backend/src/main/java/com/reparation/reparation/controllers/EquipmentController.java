@@ -56,6 +56,7 @@ public class EquipmentController {
                 .temp_equip(equipment.getTemp_equip())
                 .on_off_equip(equipment.isOn_off_equip())
                 .cau_dam_equip(equipment.getCau_dam_equip())
+                .condEquip(equipment.getCondEquip())
 
                 .id_customer(equipment.getCustomer() != null ? equipment.getCustomer().getId_customer() : null)
                 .name(equipment.getCustomer() != null ? equipment.getCustomer().getName() : null)
@@ -84,6 +85,7 @@ public class EquipmentController {
                 .temp_equip(equipment.getTemp_equip())
                 .on_off_equip(equipment.isOn_off_equip())
                 .cau_dam_equip(equipment.getCau_dam_equip())
+                .condEquip(equipment.getCondEquip())
                 .id_customer(equipment.getCustomer() != null ? equipment.getCustomer().getId_customer() : null)
                 .name(equipment.getCustomer() != null ? equipment.getCustomer().getName() : null)
 
@@ -123,6 +125,7 @@ public class EquipmentController {
             .temp_equip(equipmentDTO.getTemp_equip())
             .on_off_equip(equipmentDTO.isOn_off_equip())
             .cau_dam_equip(equipmentDTO.getCau_dam_equip())
+            .condEquip(equipmentDTO.getCondEquip())
             .customer(customerOptional.get())
         .build();
 
@@ -168,6 +171,7 @@ public class EquipmentController {
             equipment.setTemp_equip(equipmentDTO.getTemp_equip());
             equipment.setOn_off_equip(equipmentDTO.isOn_off_equip());
             equipment.setCau_dam_equip(equipmentDTO.getCau_dam_equip());
+            equipment.setCondEquip(equipmentDTO.getCondEquip());
             equipmentService.save(equipment);
             return ResponseEntity.ok("Registro Actualizado");
         }

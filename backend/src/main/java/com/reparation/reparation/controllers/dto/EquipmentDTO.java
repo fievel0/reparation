@@ -43,6 +43,8 @@ public class EquipmentDTO {
 
     private String cau_dam_equip;
 
+    private String condEquip;
+
     private Long id_customer;
 
     private String name;

@@ -63,6 +63,7 @@ public class Rep_orderController {
                 .addit_details(rep_order.getAddit_details())
 
                 .customer(CustomerDTO.builder()
+                    .id_customer(rep_order.getCustomer().getId_customer())
                     .name(rep_order.getCustomer().getName())
                     .cardIdentifi(rep_order.getCustomer().getCardIdentifi())
                     .phone(rep_order.getCustomer().getPhone())
@@ -70,6 +71,7 @@ public class Rep_orderController {
                 .build())
 
                 .equipment(EquipmentDTO.builder()
+                    .id_equip(rep_order.getEquipment().getId_equip())
                     .model_equip(rep_order.getEquipment().getModel_equip())
                     .brand_equip(rep_order.getEquipment().getBrand_equip())
                     .color_equip(rep_order.getEquipment().getColor_equip())
@@ -82,6 +84,7 @@ public class Rep_orderController {
                     .temp_equip(rep_order.getEquipment().getTemp_equip())
                     .on_off_equip(rep_order.getEquipment().isOn_off_equip())
                     .cau_dam_equip(rep_order.getEquipment().getCau_dam_equip())
+                    .condEquip(rep_order.getEquipment().getCondEquip())
                 .build())
                 
                 .payments(rep_order.getPaymentsList().stream()
@@ -94,6 +97,7 @@ public class Rep_orderController {
                 .collect(Collectors.toList()))
 
                 .employee(EmployeeDTO.builder()
+                .idEmployee(rep_order.getEmployee().getIdEmployee())
                 .nameEmployee(rep_order.getEmployee().getNameEmployee())
                 .build())
 
@@ -129,6 +133,7 @@ public class Rep_orderController {
 
                     .payments(rep_order.getPaymentsList().stream()
                         .map(payment -> PaymentsDTO.builder()
+                            .id_pay(payment.getId_pay())
                             .date_pay(payment.getDate_pay())
                         .build())
                         .collect(Collectors.toList()))
