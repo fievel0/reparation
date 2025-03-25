@@ -81,7 +81,7 @@ public class PaymentsController {
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody PaymentsDTO paymentsDTO) throws URISyntaxException{
-        
+
         if(paymentsDTO.getDate_pay().isBlank()){
             return ResponseEntity.badRequest().build();
         }
@@ -97,7 +97,15 @@ public class PaymentsController {
         .build();
         paymentsService.save(payments);
 
-        return ResponseEntity.created(new URI("/api/equipment/save")).build();
+        return ResponseEntity.created(new URI("/api/payments/save"))
+                .body(PaymentsDTO.builder()
+                        .id_pay(payments.getId_pay()) // Devolver el ID generado
+                        .date_pay(payments.getDate_pay())
+                        .money_pay(payments.getMoney_pay())
+                        .money_b_pay(payments.getMoney_b_pay())
+                        .order_id(payments.getOrder().getId_order())
+                        .order_tot_pay(payments.getOrder().getTot_pay())
+                        .build());
     }
 
     @PutMapping("/update/{id}")

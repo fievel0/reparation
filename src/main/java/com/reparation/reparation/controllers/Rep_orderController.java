@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.reparation.reparation.service.*;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,10 +29,6 @@ import com.reparation.reparation.entities.Customers;
 import com.reparation.reparation.entities.Employee;
 import com.reparation.reparation.entities.Equipment;
 import com.reparation.reparation.entities.Rep_order;
-import com.reparation.reparation.service.ICustomersService;
-import com.reparation.reparation.service.IEmployeeService;
-import com.reparation.reparation.service.IEquipmentService;
-import com.reparation.reparation.service.IRep_orderService;
 
 @RestController
 @RequestMapping("/api/ord_rep")
@@ -118,7 +115,11 @@ public class Rep_orderController {
 
                 return Rep_orderDTO.builder()
                     .id_order(rep_order.getId_order())
+                    .addit_details(rep_order.getAddit_details())
                     .create_date(rep_order.getCreate_date())
+                    .deadline(rep_order.getDeadline())
+                    .tot_pay(rep_order.getTot_pay())
+
     
 
                     .customer(CustomerDTO.builder()
@@ -208,12 +209,30 @@ public ResponseEntity<?> findLast() {
             .customer(customer)
             .equipment(equipment)
             .employee(employee)
+
             
         .build();
 
         rep_orderService.save(repOrder);
 
-        return ResponseEntity.created(new URI("/api/order_rep/save")).build();
+        return ResponseEntity.created(new URI("/api/ord_rep/save"))
+                .body(Rep_orderDTO.builder()
+                        .id_order(repOrder.getId_order())  // Devolver el ID generado
+                        .create_date(repOrder.getCreate_date())
+                        .deadline(repOrder.getDeadline())
+                        .tot_pay(repOrder.getTot_pay())
+                        .addit_details(repOrder.getAddit_details())
+                        .customer(CustomerDTO.builder()
+                                .id_customer(repOrder.getCustomer().getId_customer())
+                                .build())
+                        .equipment(EquipmentDTO.builder()
+                                .id_equip(repOrder.getEquipment().getId_equip())
+                                .build())
+                        .employee(EmployeeDTO.builder()
+                                .idEmployee(repOrder.getEmployee().getIdEmployee())
+                                .build())
+                        .build());
+
     }
 
     
