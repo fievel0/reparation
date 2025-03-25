@@ -1,0 +1,173 @@
+/* Estilos por defecto (para dispositivos pequeños y medianos) */
+.Primero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: flex-start;
+    padding-top: 60px;
+  }
+  
+  .Titulo {
+    text-align: center;
+    font-size: 2em;
+    padding-top: 10px;
+  }
+/*Logos*/
+  .Logo {
+    width: 100px;
+    height: auto;
+  }
+
+
+  /*FIN de logos*/
+
+
+
+
+
+  .Tituloo {
+    font-size: 1.5em;
+    padding-top: 25px;
+  }
+  
+  /* Estilo para los botones del menú */
+  .Botones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  /* Se agrupan los nuevos botones para que compartan el mismo estilo */
+  .btn-clientes,
+  .btn-nuevo,
+  .btn-empleados,
+  .btn-equipos,
+  .btn-orden,
+  .btn-pagos,
+  .btn-usuarios,
+  .btn-salir {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: rgb(161, 147, 72);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  /* Efecto hover para los botones */
+  .btn-clientes:hover,
+  .btn-nuevo:hover,
+  .btn-empleados:hover,
+  .btn-equipos:hover,
+  .btn-orden:hover,
+  .btn-pagos:hover,
+  .btn-usuarios:hover,
+  .btn-salir:hover {
+    background-color: rgb(93, 83, 35);
+  }
+  
+  a {
+    display: block;
+    width: 100%;
+    margin-left: 40px;
+  }
+  
+  /* Media query para pantallas grandes (más de 1200px) */
+  @media screen and (min-width: 1200px) {
+    
+    
+    .Titulo {
+      margin-top: -100px;
+      margin-left: -50rem;
+      font-size: 40px;
+    }
+  
+    
+    .Logo {
+        width: 100px;
+        padding: 30px;
+        margin-top: -60px;
+        margin-left: -80rem;
+      }
+    .Tituloo {
+      margin-top: 10px;
+      font-size: 30px;
+    }
+
+    .btn-clientes,
+    .btn-nuevo,
+    .btn-empleados,
+    .btn-equipos,
+    .btn-orden,
+    .btn-pagos,
+    .btn-usuarios,
+    .btn-salir {
+      font-size: 1.5em;
+      padding: 20px;
+    }
+  
+    .Botones {
+      margin-top: 20px;
+    }
+
+    .btn-clientes{
+        margin-left: -50px; 
+    }
+    .btn-nuevo{
+      margin-left: -50px; 
+    }
+    .btn-equipos{
+      margin-left: -50px;
+    }
+    .btn-orden{
+      margin-left: -50px;
+    }
+    .Botones {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        width: 97%;
+        padding: 0 10px; /* Ajusta según lo necesites */
+      }
+      
+      .Botones a, .Botones button {
+        width: 100%;
+      }
+    
+      
+      .btn-empleados{
+        margin-left: -50px;
+      }
+      .btn-salir{
+        margin-left: -3rem;
+      }
+      .logo-clientes {
+        margin-top: 10px;
+        width: 35px; /* Ajusta el tamaño del icono */
+        height: 35px; /* Ajusta el tamaño del icono */
+        margin-right: 5px; /* Espacio entre el icono y el texto */
+    }
+    .Clientes{
+        margin-left: 10rem;
+        margin-top: -40px;
+    }
+    .btn-pagos{
+      margin-left: -3rem;
+    }
+    .btn-usuarios{
+      margin-left: -3rem;
+    }
+  }
+  
+  a {
+    display: block;
+    width: 100%;
+    margin-left: 47px;
+  }
+  

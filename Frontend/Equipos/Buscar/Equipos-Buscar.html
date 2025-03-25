@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INT-SOLUTIONS Control de Equipos</title>
+  <link rel="stylesheet" href="Equipos-Buscar.css">
+  <link rel="icon" type="image/png" href="/Imagenes/logo.png"> 
+</head>
+<body>
+  <!-- Título y logo -->
+  <header class="cabeza">
+    <img class="Logo" src="/Imagenes/logo.png" alt="LOGO-INT">
+    <div class="Titulo">INT-SOLUTIONS</div>
+  </header>
+  
+  <!-- Subtítulo y botones -->
+  <section class="header-container">
+    <div class="Subtitulo">Búsqueda Equipos</div>
+    <div class="botones-container">
+      <a href="../Principal/Equipos.html"><button class="Salir">Volver</button></a>
+    </div>
+  </section>
+
+  <main class="cuerpo">
+    <!-- Botones para seleccionar búsqueda por ID o Cédula -->
+    <div class="BotonesPrincipales">
+      <button type="button" class="ID" id="btnID">ID Equipo</button>
+      <button type="button" class="ID_Dueño" id="btnCedula">ID Dueño</button>
+    </div>
+
+    <!-- Formulario para búsqueda -->
+    <div class="CampoBuscar">
+      <form id="CampoBuscar1">
+        <div class="input-container">
+          <input type="text" placeholder="Llenar campo" required>
+          <button type="submit">Buscar</button>
+        </div>
+      </form>
+    </div>
+
+    
+    
+    <!-- Contenedor para mensajes globales y botones de acción -->
+    <div id="globalButtonsContainer">
+      <!-- Los mensajes se insertarán aquí, justo encima de los botones -->
+      <div class="action-buttons">
+        <button class="Borrar" id="btnBorrar">Borrar</button>
+        <button class="Actualizar" id="btnActualizar">Actualizar</button>
+      </div>
+    <!-- Contenedor para resultados de búsqueda -->
+    <div class="result-container">
+      <!-- Aquí se mostrarán los resultados de la búsqueda -->
+    </div>
+    </div>
+  </main>
+
+  <!-- Modal de confirmación -->
+  <div id="modalConfirm" class="modal hidden">
+    <div class="modal-content">
+      <p>¿Está seguro de eliminar este registro?</p>
+      <div class="modal-buttons">
+        <button id="confirmYes">Sí</button>
+        <button id="confirmNo">Cancelar</button>
+      </div>
+    </div>
+  </div>
+   <!-- Contenedor de paginación -->
+   <div class="Botones_pg" id="pagination"></div>
+  <script src="Equipos-Buscar.js"></script>
+</body>
+</html>
