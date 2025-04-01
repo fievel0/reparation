@@ -1,0 +1,161 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Employee API",
+      "version": "1.0"
+    },
+    "host": "localhost:8084",
+    "basePath": "/api/employee",
+    "schemes": ["http"],
+    "paths": {
+      "/find/{id}": {
+        "get": {
+          "summary": "Find employee by ID",
+          "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }],
+          "responses": {
+            "200": { "description": "Successful response" },
+            "404": { "description": "Employee not found" }
+          }
+        }
+      },
+      "/findAll": {
+        "get": {
+          "summary": "Get all employees",
+          "responses": {
+            "200": { "description": "Successful response" }
+          }
+        }
+      },
+      "/save": {
+        "post": {
+          "summary": "Save new employee",
+          "parameters": [{
+            "name": "employee",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/EmployeeDTO" }
+          }],
+          "responses": {
+            "201": { "description": "Created" },
+            "400": { "description": "Bad request" }
+          }
+        }
+      },
+      "/update/{id}": {
+        "put": {
+          "summary": "Update employee by ID",
+          "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }, {
+            "name": "employee",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/EmployeeDTO" }
+          }],
+          "responses": {
+            "200": { "description": "Updated" },
+            "404": { "description": "Not found" }
+          }
+        }
+      },
+      "/delete/{id}": {
+        "delete": {
+          "summary": "Delete employee by ID",
+          "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }],
+          "responses": {
+            "200": { "description": "Deleted" },
+            "400": { "description": "Bad request" }
+          }
+        }
+      },
+      "/cedula/{cedEmployee}": {
+        "get": {
+          "summary": "Find employee by Cedula",
+          "parameters": [{
+            "name": "cedEmployee",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }],
+          "responses": {
+            "200": { "description": "Successful response" },
+            "404": { "description": "Employee not found" }
+          }
+        }
+      },
+      "/deletee/{cedEmployee}": {
+        "delete": {
+          "summary": "Delete employee by Cedula",
+          "parameters": [{
+            "name": "cedEmployee",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }],
+          "responses": {
+            "200": { "description": "Deleted" },
+            "404": { "description": "Employee not found" }
+          }
+        }
+      },
+      "/updatee/{cedEmployee}": {
+        "put": {
+          "summary": "Update employee by Cedula",
+          "parameters": [{
+            "name": "cedEmployee",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }, {
+            "name": "employee",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/EmployeeDTO" }
+          }],
+          "responses": {
+            "200": { "description": "Updated" },
+            "404": { "description": "Employee not found" }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "EmployeeDTO": {
+        "type": "object",
+        "properties": {
+          "idEmployee": { "type": "integer" },
+          "nameEmployee": { "type": "string" },
+          "positionEmployee": { "type": "string" },
+          "cedEmployee": { "type": "string" },
+          "dirEmployee": { "type": "string" },
+          "telEmpployee": { "type": "string" },
+          "orders": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/Rep_orderDTO" }
+          }
+        }
+      },
+      "Rep_orderDTO": {
+        "type": "object",
+        "properties": {
+          "id_order": { "type": "integer" },
+          "create_date": { "type": "string", "format": "date-time" },
+          "deadline": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+  

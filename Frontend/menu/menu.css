@@ -11,7 +11,7 @@
   .Titulo {
     text-align: center;
     font-size: 2em;
-    padding-top: 10px;
+    padding-top: 80px;
   }
 /*Logos*/
   .Logo {
@@ -77,15 +77,23 @@
     width: 100%;
     margin-left: 40px;
   }
-  
+  .BotonModoOscuro{
+    background-color: transparent; /* Hace el fondo transparente */
+    border: none; /* Quita el borde */
+    font-size: 40px; /* Aumenta el tamaño del texto */
+    padding: 15px 30px; /* Ajusta el tamaño del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: -8rem;
+    margin-left: 16rem;}
   /* Media query para pantallas grandes (más de 1200px) */
   @media screen and (min-width: 1200px) {
     
     
     .Titulo {
       margin-top: -100px;
-      margin-left: -50rem;
+      margin-left: -1rem;
       font-size: 40px;
+      margin-top: -3rem;
     }
   
     
@@ -98,6 +106,7 @@
     .Tituloo {
       margin-top: 10px;
       font-size: 30px;
+      
     }
 
     .btn-clientes,
@@ -163,6 +172,15 @@
     .btn-usuarios{
       margin-left: -3rem;
     }
+    .BotonModoOscuro{
+      background-color: transparent; /* Hace el fondo transparente */
+      border: none; /* Quita el borde */
+      font-size: 40px; /* Aumenta el tamaño del texto */
+      padding: 15px 30px; /* Ajusta el tamaño del botón */
+      cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+      margin-top: -9rem;
+      margin-left: 91rem;
+  }
   }
   
   a {
@@ -170,4 +188,60 @@
     width: 100%;
     margin-left: 47px;
   }
-  
+/* =======================
+   MODO OSCURO
+========================== */
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Ajusta el fondo, borde y color de los inputs en modo oscuro */
+.dark-mode .Formulario input {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  color: #e0e0e0;
+}
+
+/* Cambiar el fondo del botón en modo oscuro */
+.dark-mode .Formulario .btn-iniciar {
+  background-color: #333;
+}
+
+@media screen and (width: 768px) and (height: 1037px) {
+  .BotonModoOscuro {
+    margin-left: 30rem;
+
+  }
+}
+@media screen and (width: 1024px) and (height: 1037px) {
+  .BotonModoOscuro {
+    margin-left: 45rem;
+
+  }
+}
+@media screen and (width: 1440px) and (height: 1037px) {
+  .BotonModoOscuro {
+    margin-left: 75rem;
+
+  }
+  .Titulo{
+    margin-top: -8rem;
+    margin-left: 1rem;
+  }
+}
+@media screen and (width: 2560px) and (height: 1037px) {
+  .BotonModoOscuro {
+    margin-top: -8rem;
+    margin-left: 130rem;
+
+  }
+  .Logo{
+    margin-top: -1rem;
+    margin-right: 60rem;
+  }
+  .Titulo{
+    margin-top: -8rem;
+    margin-left: 1rem;
+  }
+}

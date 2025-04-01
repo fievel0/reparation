@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => { 
     // Referencias a elementos del DOM
     const btnID = document.getElementById("btnID");
     const btnCedula = document.getElementById("btnCedula");
@@ -13,8 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmYes = document.getElementById("confirmYes");
     const confirmNo = document.getElementById("confirmNo");
 
-    // Variable para almacenar el ID pendiente de borrado
-    let pendingDeleteId = null;
+    // Variable para almacenar el valor pendiente de borrado
+    let pendingDeleteValue = null;
+    let deleteEndpoint = "";
 
     // Función para quitar la clase "active" de ambos botones
     const clearSelected = () => {
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
             resultContainer.innerHTML = `<p style="color: red;">No se encontró información.</p>`;
             return;
         }
-        // Se muestran los datos en campos de entrada para poder editarlos (el ID se marca como readonly)
+        // Se muestran los datos en campos de entrada para poder editarlos
         resultContainer.innerHTML = `
             <div class="employee"> 
                 <p><strong>ID:</strong> <input type="text" id="editId" value="${employee.idEmployee || ''}" readonly></p>
@@ -77,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showError("Por favor ingresa un valor para la búsqueda");
             return;
         }
+        // Selecciona el endpoint de búsqueda según la opción activa
         const url = btnID.classList.contains("active")
             ? `http://localhost:8084/api/employee/find/${valor}`
             : `http://localhost:8084/api/employee/cedula/${valor}`;
@@ -96,29 +98,33 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
 
-    // Evento para el botón Borrar: se muestra el modal de confirmación
+    // Evento para el botón Borrar: muestra el modal de confirmación y selecciona el endpoint según la opción activa
     btnBorrar.addEventListener("click", () => {
-        if (!btnID.classList.contains("active")) {
-            showError("Para borrar, selecciona la opción ID");
-            return;
-        }
         const valor = inputField.value.trim();
         if (valor === "") {
-            showError("Por favor ingresa el ID para borrar");
+            showError("Por favor ingresa un valor para borrar");
             return;
         }
-        // Almacena el ID pendiente de borrado y muestra el modal
-        pendingDeleteId = valor;
+        // Selecciona el endpoint según la opción activa
+        if (btnID.classList.contains("active")) {
+            pendingDeleteValue = valor;
+            deleteEndpoint = `http://localhost:8084/api/employee/delete/${valor}`;
+        } else if (btnCedula.classList.contains("active")) {
+            pendingDeleteValue = valor;
+            deleteEndpoint = `http://localhost:8084/api/employee/deletee/${valor}`;
+        } else {
+            showError("Por favor, selecciona una opción de búsqueda");
+            return;
+        }
+        // Muestra el modal de confirmación
         modalConfirm.classList.remove("hidden");
     });
 
     // Evento para confirmar la eliminación (botón Sí)
     confirmYes.addEventListener("click", () => {
-        if (!pendingDeleteId) return;
+        if (!pendingDeleteValue || deleteEndpoint === "") return;
         
-        const url = `http://localhost:8084/api/employee/delete/${pendingDeleteId}`;
-        
-        fetch(url, { method: "DELETE" })
+        fetch(deleteEndpoint, { method: "DELETE" })
             .then(response => {
                 if (!response.ok) {
                     throw new Error("Error al borrar el registro");
@@ -128,42 +134,53 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(() => {
                 inputField.value = "";
                 resultContainer.innerHTML = `<p style="color: green;">Registro Eliminado</p>`;
-                pendingDeleteId = null;
+                pendingDeleteValue = null;
+                deleteEndpoint = "";
                 modalConfirm.classList.add("hidden");
             })
             .catch(error => {
                 showError(error.message);
-                pendingDeleteId = null;
+                pendingDeleteValue = null;
+                deleteEndpoint = "";
                 modalConfirm.classList.add("hidden");
             });
     });
 
     // Evento para cancelar la eliminación (botón Cancelar)
     confirmNo.addEventListener("click", () => {
-        pendingDeleteId = null;
+        pendingDeleteValue = null;
+        deleteEndpoint = "";
         modalConfirm.classList.add("hidden");
     });
 
-    // Evento para el botón Actualizar
+    // Evento para el botón Actualizar: utiliza el endpoint según la opción activa
     btnActualizar.addEventListener("click", () => {
-        if (!btnID.classList.contains("active")) {
-            showError("Para actualizar, selecciona la opción ID");
-            return;
-        }
-        const idField = document.getElementById("editId");
-        if (!idField) {
+        // Se asume que ya se realizó una búsqueda y se muestran los campos editables
+        const nameField = document.getElementById("editName");
+        if (!nameField) {
             showError("No hay registro para actualizar. Realiza una búsqueda primero.");
             return;
         }
-        const idEmployee = idField.value.trim();
-        const nameEmployee = document.getElementById("editName").value.trim();
+        const nameEmployee = nameField.value.trim();
         const positionEmployee = document.getElementById("editPosition").value.trim();
         const cedEmployee = document.getElementById("editCedula").value.trim();
         const dirEmployee = document.getElementById("editDir").value.trim();
         const telEmpployee = document.getElementById("editPhone").value.trim();
-        
-        const payload = { idEmployee, nameEmployee, positionEmployee, cedEmployee, dirEmployee, telEmpployee };
-        const url = `http://localhost:8084/api/employee/update/${idEmployee}`;
+
+        const payload = { nameEmployee, positionEmployee, cedEmployee, dirEmployee, telEmpployee };
+        let url = "";
+        if (btnID.classList.contains("active")) {
+            const idEmployee = document.getElementById("editId").value.trim();
+            url = `http://localhost:8084/api/employee/update/${idEmployee}`;
+            // Se incluye el id en el payload si fuera necesario
+            payload.idEmployee = idEmployee;
+        } else if (btnCedula.classList.contains("active")) {
+            // Actualiza utilizando la cédula como identificador
+            url = `http://localhost:8084/api/employee/updatee/${cedEmployee}`;
+        } else {
+            showError("Por favor, selecciona una opción de búsqueda");
+            return;
+        }
 
         fetch(url, {
             method: "PUT",
@@ -186,4 +203,25 @@ document.addEventListener("DOMContentLoaded", () => {
             showError(error.message);
         });
     });
+    const btnDarkMode = document.getElementById("btn-dark-mode");
+
+    // Aplicar el modo oscuro si estaba activado
+    if (localStorage.getItem("dark-mode") === "enabled") {
+        document.body.classList.add("dark-mode");
+        if (btnDarkMode) btnDarkMode.textContent = "☀️";
+    }
+
+    if (btnDarkMode) {
+        btnDarkMode.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+
+            if (document.body.classList.contains("dark-mode")) {
+                localStorage.setItem("dark-mode", "enabled");
+                btnDarkMode.textContent = "☀️";
+            } else {
+                localStorage.setItem("dark-mode", "disabled");
+                btnDarkMode.textContent = "🌑";
+            }
+        });
+    }
 });

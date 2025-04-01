@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage--;
         renderPage();
         renderPaginationControls();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
       paginationContainer.appendChild(prevButton);
     }
@@ -143,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage = i;
         renderPage();
         renderPaginationControls();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
       paginationContainer.appendChild(pageButton);
     }
@@ -155,8 +157,30 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage++;
         renderPage();
         renderPaginationControls();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
       paginationContainer.appendChild(nextButton);
     }
   }
+  const btnDarkMode = document.getElementById("btn-dark-mode");
+
+    // Aplicar el modo oscuro si estaba activado
+    if (localStorage.getItem("dark-mode") === "enabled") {
+        document.body.classList.add("dark-mode");
+        if (btnDarkMode) btnDarkMode.textContent = "☀️";
+    }
+
+    if (btnDarkMode) {
+        btnDarkMode.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+
+            if (document.body.classList.contains("dark-mode")) {
+                localStorage.setItem("dark-mode", "enabled");
+                btnDarkMode.textContent = "☀️";
+            } else {
+                localStorage.setItem("dark-mode", "disabled");
+                btnDarkMode.textContent = "🌑";
+            }
+        });
+    }
 });

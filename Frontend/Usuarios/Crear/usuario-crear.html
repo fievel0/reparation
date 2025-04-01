@@ -10,8 +10,11 @@
 <body>
   <!-- Título y logo -->
   <div class="cabeza">
-    <img class="Logo" src="/Imagenes/logo.png" alt="LOGO-INT">
+    <img class="Logo" src="/Imagenes/logoo.png" alt="LOGO-INT">
     <div class="Titulo">INT-SOLUTIONS</div>
+    <button class="BotonModoOscuro"  id="btn-dark-mode">🌑</button>
+
+    
   </div>
   
   <!-- Subtítulo y botones -->
@@ -24,17 +27,11 @@
   <!-- Formulario para cliente nuevo -->
   <div class="form-container">
     <form action="procesar-cliente.php" method="POST">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
-        
-      <label for="identificacion">Identificación:</label>
-      <input type="text" id="identificacion" name="identificacion" required>
-
-      <label for="telefono">Teléfono:</label>
-      <input type="tel" id="telefono" name="telefono" required>
-
-      <label for="correo">Correo:</label>
+      <label for="Correo">Correo:</label>
       <input type="email" id="correo" name="correo" required>
+        
+      <label for="correo">Contraseña:</label>
+      <input type="text" id="contraseña" name="contraseña" required>
 
       <button class="Guardar"  type="submit">Guardar</button>
     </form>

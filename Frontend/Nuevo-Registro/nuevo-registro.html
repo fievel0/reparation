@@ -10,8 +10,10 @@
 <body>
   <!-- Título y logo -->
   <div class="cabeza">
-    <img class="Logo" src="/Imagenes/logo.png" alt="LOGO-INT">
+    <img class="Logo" src="/Imagenes/logoo.png" alt="LOGO-INT">
     <div class="Titulo">INT-SOLUTIONS</div>
+    <button class="BotonModoOscuro"  id="btn-dark-mode">🌑</button>
+
   </div>
   
   <!-- Subtítulo y botones -->
@@ -51,9 +53,9 @@
       </form>
     </div>
 
-    <!-- Contenedor para resultados de búsqueda -->
+    <!-- Aquí se mostrarán los resultados de la búsqueda -->
     <div class="result-container">
-      <!-- Aquí se mostrarán los resultados de la búsqueda -->
+      
     </div>
   </div>
   
@@ -102,7 +104,7 @@
       <!-- Aquí se mostrarán los resultados de la búsqueda -->
     </div>
   </main>
-  
+  <!-- Formulario para registrar un equipo -->
   <div class="form-containerr">
     <form id="equipo-form">
       <div class="TituloEquipo">Registrar Equipo</div>
@@ -121,7 +123,7 @@
       <label for="pass_equip">Contraseña:</label>
       <input type="text" id="pass_equip" name="pass_equip">
 
-      <label for="anti_equip">Antivirus:</label>
+      <label for="anti_equip">Antiguedad:</label>
       <input type="text" id="anti_equip" name="anti_equip">
 
       <label for="accessor_equip">Accesorios:</label>
@@ -171,6 +173,7 @@
   <div class="form-containerrr">
     <!-- Contenedor para resultados de búsqueda -->
     
+    <!-- Formulario para registrar una orden de pago -->
     <div class="Orden_Pago">Registrar Orden de Pago</div>
     <form action="procesar-orden.php" method="POST">
       <label for="fechaRecepcion">Fecha de Recepción:</label>
@@ -222,7 +225,10 @@
   </div>
   <div class="contenedor-final"></div>
   <div class="result-containerrrr"></div>
-  
+  <!-- Imagen de logo para descargar el word con los datos registrados -->
+  <img class="Logo_Doc" id="Logo_Doc" src="/Imagenes/doc.png" alt="LOGO-DOC" style="display: none;">
+  <!-- Boton  para descargar el word con los datos registrados -->
+  <button class="BotonDoc" id="generarDocBtn" type="button" onclick="generarWord()" style="display: none;">Generar Documento</button>
   <script src="nuevo-registro.js"></script>
 </body>
 </html>

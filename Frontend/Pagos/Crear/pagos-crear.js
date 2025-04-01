@@ -1,6 +1,27 @@
+// Configurar el modo oscuro al cargar la página
+const btnDarkMode = document.getElementById("btn-dark-mode");
+if (localStorage.getItem("dark-mode") === "enabled") {
+  document.body.classList.add("dark-mode");
+  if (btnDarkMode) btnDarkMode.textContent = "☀️";
+}
+
+if (btnDarkMode) {
+  btnDarkMode.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    if (document.body.classList.contains("dark-mode")) {
+      localStorage.setItem("dark-mode", "enabled");
+      btnDarkMode.textContent = "☀️";
+    } else {
+      localStorage.setItem("dark-mode", "disabled");
+      btnDarkMode.textContent = "🌑";
+    }
+  });
+}
+
+// Event listener para el envío del formulario
 document.querySelector('.form-container form').addEventListener('submit', function(event) {
   event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
-  
+
   // Obtener los valores de los campos del formulario
   const fechaPago = document.getElementById('fechaPago').value;
   const saldo = parseFloat(document.getElementById('saldo').value);
@@ -27,13 +48,13 @@ document.querySelector('.form-container form').addEventListener('submit', functi
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(paymentData) // Convertir el objeto en JSON
+    body: JSON.stringify(paymentData)
   })
   .then(response => {
     if (!response.ok) {
       throw new Error('Error al guardar el pago');
     }
-    return response.json(); // Asumimos que la respuesta es en formato JSON
+    return response.json();
   })
   .then(data => {
     // Mostrar un mensaje de éxito

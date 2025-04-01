@@ -38,7 +38,7 @@ body {
     font-size: 1.8em;
     font-weight: bold;
     padding-top: 10px;
-    color: #333;
+    
   }
   
   .header-container {
@@ -46,7 +46,6 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background-color: white;
     border-radius: 5px;
     margin: 10px;
   }
@@ -55,7 +54,6 @@ body {
   .SubtituloN {
     font-size: 1.5em;
     font-weight: bold;
-    color: #555;
   }
   
   /* ---------------------- */
@@ -250,7 +248,12 @@ body {
   .Botones_pg button:hover {
     background-color: rgb(93, 83, 35);
   }
-  
+  .BotonDoc button{
+    background-color: rgb(91, 152, 223);
+  }
+  .BotonDoc button:hover{
+    background-color: rgb(16, 20, 221);
+  }
   .opcion-paginacion {
     margin: 20px 0;
     display: flex;
@@ -421,7 +424,15 @@ body {
   margin-top: 10px;
 }
 
-
+.BotonModoOscuro{
+  background-color: transparent; /* Hace el fondo transparente */
+  border: none; /* Quita el borde */
+  font-size: 40px; /* Aumenta el tamaño del texto */
+  padding: 15px 30px; /* Ajusta el tamaño del botón */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  margin-top: -0.5rem;
+  margin-left: -3rem;
+  }
 
 
 
@@ -431,11 +442,23 @@ body {
   /* Media Queries          */
   /* ---------------------- */
   @media screen and (min-width: 1559px) {
+    
+
     /* Ajustes generales de posicionamiento y tamaños */
+    .BotonModoOscuro{
+      background-color: transparent; /* Hace el fondo transparente */
+      border: none; /* Quita el borde */
+      font-size: 40px; /* Aumenta el tamaño del texto */
+      padding: 15px 30px; /* Ajusta el tamaño del botón */
+      cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+      margin-top: -0.5rem;
+      margin-left: 66rem;
+      }
     .Subtitulo {
       margin-left: 41rem;
       font-size: 35px;
       margin-top: -2rem;
+      
     }
     .botones-container button {
       padding: 15px 30px;
@@ -570,25 +593,33 @@ body {
       margin-left: 10px;
     }
    
+    .Logo_Doc{
+      
+      width: 100px;
+      margin-top: -40rem;
+      margin-left: 47rem;
+    }
+    .BotonDoc {
+      margin-top: 2px;
+      margin-left: 46rem;
+      width: 150px; /* Ajusta el ancho */
+      height: 80px;
+      font-size: 20px;
+      background-color: rgb(91, 152, 223);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }  
+    
+    .BotonDoc:hover {
+      background-color: rgb(78, 145, 221);
+    }
+    
 
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 
 /* Estilo para el botón Guardar Equipo */
 .Guardar {
@@ -637,5 +668,307 @@ body {
 .buscar-btn:hover {
   background-color: rgb(189, 106, 39);
 }
+/* =======================
+   MODO OSCURO
+========================== */
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
 
+/* Ajusta el fondo, borde y color de los inputs en modo oscuro */
+.dark-mode .Formulario input {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  color: #e0e0e0;
+}
 
+/* Cambiar el fondo del botón en modo oscuro */
+.dark-mode .Formulario .btn-iniciar {
+  background-color: #333;
+}
+
+.dark-mode .customer {
+  background: #1e1e1e !important;
+  color: #e0e0e0;
+}
+.dark-mode .employee {
+  background: #1e1e1e !important;
+  color: #e0e0e0;
+}
+.dark-mode .team-result {
+  background: #1e1e1e !important;
+  color: #e0e0e0;
+}
+.dark-mode .order-result {
+  background: #1e1e1e !important;
+  color: #e0e0e0;
+}
+.dark-mode .payment-result {
+  background: #1e1e1e !important;
+  color: #e0e0e0;
+}
+@media screen and (width: 320px) and (height: 1037px) {
+  .Logo{
+    margin-left: 7rem;
+  }
+  .Titulo{
+    margin-top: 10rem;
+    margin-left: -13rem;
+  }
+  .BotonModoOscuro{
+    background-color: transparent; /* Hace el fondo transparente */
+    border: none; /* Quita el borde */
+    font-size: 40px; /* Aumenta el tamaño del texto */
+    padding: 15px 30px; /* Ajusta el tamaño del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: -10rem;
+    margin-left: -7rem;
+    }
+    .Logo_Doc{
+      
+      width: 100px;
+      margin-top: 1rem;
+      margin-left: 11rem;
+    }
+    .BotonDoc {
+      margin-top: 2px;
+      margin-left: 10rem;
+      width: 150px; /* Ajusta el ancho */
+      height: 80px;
+      font-size: 20px;
+      background-color: rgb(91, 152, 223);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }  
+    
+    .BotonDoc:hover {
+      background-color: rgb(78, 145, 221);
+    }
+}
+@media screen and (width: 425px) and (height: 1037px) {
+  
+  .BotonModoOscuro{
+    background-color: transparent; /* Hace el fondo transparente */
+    border: none; /* Quita el borde */
+    font-size: 40px; /* Aumenta el tamaño del texto */
+    padding: 15px 30px; /* Ajusta el tamaño del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: -0.5rem;
+    margin-left: -2rem;
+    }
+    .Logo_Doc{
+      
+      width: 100px;
+      margin-top: 1rem;
+      margin-left: 11rem;
+    }
+    .BotonDoc {
+      margin-top: 2px;
+      margin-left: 10rem;
+      width: 150px; /* Ajusta el ancho */
+      height: 80px;
+      font-size: 20px;
+      background-color: rgb(91, 152, 223);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }  
+    
+    .BotonDoc:hover {
+      background-color: rgb(78, 145, 221);
+    }
+}
+@media screen and (width: 375px) and (height: 1037px) {
+  
+  .BotonModoOscuro{
+    background-color: transparent; /* Hace el fondo transparente */
+    border: none; /* Quita el borde */
+    font-size: 40px; /* Aumenta el tamaño del texto */
+    padding: 15px 30px; /* Ajusta el tamaño del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: -0.5rem;
+    margin-left: -4rem;
+    }
+    .Logo_Doc{
+      
+      width: 100px;
+      margin-top: 1rem;
+      margin-left: 11rem;
+    }
+    .BotonDoc {
+      margin-top: 2px;
+      margin-left: 10rem;
+      width: 150px; /* Ajusta el ancho */
+      height: 80px;
+      font-size: 20px;
+      background-color: rgb(91, 152, 223);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }  
+    
+    .BotonDoc:hover {
+      background-color: rgb(78, 145, 221);
+    }
+}
+
+@media screen and (width: 768px) and (height: 1037px) {
+  
+  .BotonModoOscuro{
+    background-color: transparent; /* Hace el fondo transparente */
+    border: none; /* Quita el borde */
+    font-size: 40px; /* Aumenta el tamaño del texto */
+    padding: 15px 30px; /* Ajusta el tamaño del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: -0.5rem;
+    margin-left: 14rem;
+    }
+    .Logo_Doc{
+      
+      width: 100px;
+      margin-top: 1rem;
+      margin-left: 20rem;
+    }
+    .BotonDoc {
+      margin-top: 2px;
+      margin-left: 19rem;
+      width: 150px; /* Ajusta el ancho */
+      height: 80px;
+      font-size: 20px;
+      background-color: rgb(91, 152, 223);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }  
+    
+    .BotonDoc:hover {
+      background-color: rgb(78, 145, 221);
+    }
+}
+@media screen and (width: 1024px) and (height: 1037px) {
+  
+  .BotonModoOscuro{
+    background-color: transparent; /* Hace el fondo transparente */
+    border: none; /* Quita el borde */
+    font-size: 40px; /* Aumenta el tamaño del texto */
+    padding: 15px 30px; /* Ajusta el tamaño del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: -0.5rem;
+    margin-left: 29rem;
+    }
+    .Salir{
+      margin-left: -8rem;
+    }
+    .Logo_Doc{
+      
+      width: 100px;
+      margin-top: 1rem;
+      margin-left: 29rem;
+    }
+    .BotonDoc {
+      margin-top: 2px;
+      margin-left: 28rem;
+      width: 150px; /* Ajusta el ancho */
+      height: 80px;
+      font-size: 20px;
+      background-color: rgb(91, 152, 223);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }  
+    
+    .BotonDoc:hover {
+      background-color: rgb(78, 145, 221);
+    }
+}
+@media screen and (width: 1440px) and (height: 1037px) {
+  
+  .BotonModoOscuro{
+    background-color: transparent; /* Hace el fondo transparente */
+    border: none; /* Quita el borde */
+    font-size: 40px; /* Aumenta el tamaño del texto */
+    padding: 15px 30px; /* Ajusta el tamaño del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: -0.5rem;
+    margin-left: 53rem;
+    }
+    .Salir{
+      margin-left: -10rem;
+    }
+    .Logo_Doc{
+      
+      width: 100px;
+      margin-top: 1rem;
+      margin-left: 41rem;
+    }
+    .BotonDoc {
+      margin-top: 2px;
+      margin-left: 40rem;
+      width: 150px; /* Ajusta el ancho */
+      height: 80px;
+      font-size: 20px;
+      background-color: rgb(91, 152, 223);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }  
+    
+    .BotonDoc:hover {
+      background-color: rgb(78, 145, 221);
+    }
+}
+@media screen and (width: 2560px) and (height: 1037px) {
+  
+  .BotonModoOscuro{
+    background-color: transparent; /* Hace el fondo transparente */
+    border: none; /* Quita el borde */
+    font-size: 40px; /* Aumenta el tamaño del texto */
+    padding: 15px 30px; /* Ajusta el tamaño del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: -0.5rem;
+    margin-left: 120rem;
+    }
+    .Subtitulo{
+      margin-left: 60rem;
+    }
+    .Salir{
+      margin-left: -15rem;
+    }
+    .Logo_Doc{
+      
+      width: 100px;
+      margin-top: -40rem;
+      margin-left: 42rem;
+    }
+    .BotonDoc {
+      margin-top: 2px;
+      margin-left: 40rem;
+      width: 150px; /* Ajusta el ancho */
+      height: 80px;
+      font-size: 20px;
+      background-color: rgb(91, 152, 223);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }  
+    
+    .BotonDoc:hover {
+      background-color: rgb(78, 145, 221);
+    }
+}

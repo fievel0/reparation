@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INT-SOLUTIONS Control de Equipos</title>
-    <link rel="stylesheet" href="estilos.css">
-    <link rel="icon" type="image/png" href="../Imagenes/logo.png"> 
+  <!-- Configuración del documento -->
+  <meta charset="UTF-8"> <!-- Define la codificación de caracteres para admitir caracteres especiales -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace que la página sea responsive -->
+   <!-- Título de la página -->
+  <title>INT-SOLUTIONS Control de Equipos - Login</title>
+  <!-- Enlace al archivo de estilos CSS -->
+  <link rel="stylesheet" href="estilos.css">
+  <!-- Favicon de la página -->
+  <link rel="icon" type="image/png" href="../Imagenes/logo.png">
 </head>
 <body>
-            <!-- Logo y Titulo -->
-    <div class="Primero">
-        <img class="Logo" src="../Imagenes/logo.png" alt="LOGO-INT">
-        <div class="Titulo">INT-SOLUTIONS</div>
-        <div class="titulo_sesion">Inicio de Sesión</div>
+  <!-- Contenedor principal del login -->
+  <div class="Primero">
+      <!-- Logo de la empresa -->
+      <img class="Logo" src="../Imagenes/logoo.png" alt="LOGO-INT">
+      <!-- Botón para activar el modo oscuro -->
+      <button class="BotonModoOscuro"  id="btn-dark-mode">🌑</button>
+      <!-- Títulos principales -->
+      <div class="Titulo">INT-SOLUTIONS</div>
+      <div class="titulo_sesion">Inicio de Sesión</div>
 
-        <!-- Formulario de inicio de sesión -->
-        <div class="Formulario">
-            <label for="correo">Correo Electrónico</label>
-            <input type="email" id="correo" name="correo" placeholder="Ingresa tu correo electrónico" required>
-            <label for="contraseña">Contraseña</label>
-            <input type="password" id="contraseña" name="contraseña" placeholder="Ingresa tu contraseña" required>
-            <a href="../menu/menu.html"><button type="button" class="btn-iniciar">Iniciar Sesión</button></a>
+      <!-- Contenedor para mostrar mensajes o notificaciones -->
+      <div id="mensaje"></div>
 
-           
-            
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+      <!-- Formulario de inicio de sesión -->
+      <div class="Formulario">
+          <label for="correo">Correo Electrónico</label>
+          <input type="email" id="correo" name="correo" placeholder="Ingresa tu correo electrónico" required>
+          <label for="contraseña">Contraseña</label>
+          <input type="password" id="contraseña" name="contraseña" placeholder="Ingresa tu contraseña" required>
+          <!-- Botón para iniciar sesión -->
+          <button type="button" class="btn-iniciar">Iniciar Sesión</button>
+      </div>
+  </div>
+  <!-- Enlace al archivo de JavaScript -->
+  <script src="script.js"></script> 
 </body>
 </html>

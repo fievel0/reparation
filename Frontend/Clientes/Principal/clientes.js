@@ -87,12 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   
-    // Función para generar los controles de paginación
+        // Función para generar los controles de paginación
+        // Función para generar los controles de paginación
     function renderPaginationControls() {
       paginationContainer.innerHTML = '';
       const totalPages = Math.ceil(customers.length / itemsPerPage);
       if (totalPages <= 1) return;
-  
+
       // Botón "Anterior" (solo si no es la primera página)
       if (currentPage > 1) {
         const prevButton = document.createElement('button');
@@ -101,10 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
           currentPage--;
           renderPage();
           renderPaginationControls();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
         paginationContainer.appendChild(prevButton);
       }
-  
+
       // Determina el rango de botones numéricos a mostrar (máximo 3)
       let startPage, endPage;
       if (totalPages <= 3) {
@@ -122,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
           endPage = currentPage + 1;
         }
       }
-  
+
       // Crea los botones de número de página
       for (let i = startPage; i <= endPage; i++) {
         const pageButton = document.createElement('button');
@@ -134,10 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
           currentPage = i;
           renderPage();
           renderPaginationControls();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
         paginationContainer.appendChild(pageButton);
       }
-  
+
       // Botón "Siguiente" (solo si no es la última página)
       if (currentPage < totalPages) {
         const nextButton = document.createElement('button');
@@ -146,9 +149,31 @@ document.addEventListener('DOMContentLoaded', () => {
           currentPage++;
           renderPage();
           renderPaginationControls();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
         paginationContainer.appendChild(nextButton);
       }
     }
+  const btnDarkMode = document.getElementById("btn-dark-mode");
+
+    // Aplicar el modo oscuro si estaba activado
+    if (localStorage.getItem("dark-mode") === "enabled") {
+        document.body.classList.add("dark-mode");
+        if (btnDarkMode) btnDarkMode.textContent = "☀️";
+    }
+
+    if (btnDarkMode) {
+        btnDarkMode.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+
+            if (document.body.classList.contains("dark-mode")) {
+                localStorage.setItem("dark-mode", "enabled");
+                btnDarkMode.textContent = "☀️";
+            } else {
+                localStorage.setItem("dark-mode", "disabled");
+                btnDarkMode.textContent = "🌑";
+            }
+        });
+  }
   });
   

@@ -5,14 +5,21 @@ body {
     margin: 0;
     padding: 0;
 }
-
+.BotonModoOscuro{
+    background-color: transparent; /* Hace el fondo transparente */
+    border: none; /* Quita el borde */
+    font-size: 40px; /* Aumenta el tamaño del texto */
+    padding: 15px 30px; /* Ajusta el tamaño del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: -0.5rem;
+    margin-left: -3rem;
+    }
 /* Estilos para el Título */
 .Titulo {
     text-align: center;
     font-size: 1.8em;
     font-weight: bold;
     padding-top: 10px;
-    color: #333;
 }
 
 /* Estilos para el Logo */
@@ -36,7 +43,6 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background-color: white;
     border-radius: 5px;
     margin: 10px;
 }
@@ -44,7 +50,6 @@ body {
 .Subtitulo {
     font-size: 1.5em;
     font-weight: bold;
-    color: #555;
 }
 
 /* Estilo para el botón Salir */
@@ -70,7 +75,7 @@ body {
     background-color: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    margin-top: -30px; 
+    margin-top: -10px; 
 }
 
 form {
@@ -118,6 +123,16 @@ input:focus {
 }
 
  @media screen and (min-width: 1559px) {
+    /* Ajustes generales de posicionamiento y tamaños */
+    .BotonModoOscuro{
+        background-color: transparent; /* Hace el fondo transparente */
+        border: none; /* Quita el borde */
+        font-size: 40px; /* Aumenta el tamaño del texto */
+        padding: 15px 30px; /* Ajusta el tamaño del botón */
+        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        margin-top: -0.5rem;
+        margin-left: 66rem;
+        }
     .Subtitulo{
     margin-left: 40rem;
     font-size: 35px;
@@ -148,3 +163,23 @@ input:focus {
         padding: 12px 20px;
     }
 }
+/* =======================
+   MODO OSCURO
+========================== */
+.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+  
+  /* Ajusta el fondo, borde y color de los inputs en modo oscuro */
+  .dark-mode .Formulario input {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    color: #e0e0e0;
+  }
+  
+  /* Cambiar el fondo del botón en modo oscuro */
+  .dark-mode .Formulario .btn-iniciar {
+    background-color: #333;
+  }
+ 

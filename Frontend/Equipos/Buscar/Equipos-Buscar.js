@@ -24,13 +24,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Función para mostrar mensajes globales con estilos (verde para éxito, rojo para error)
   const showGlobalMessage = (msg, color) => {
     const messageDiv = document.createElement("div");
-    messageDiv.innerHTML = `<p style="color:${color}; text-align: center;">${msg}</p>`;
-    // Insertar el mensaje encima del contenedor de resultados
+    messageDiv.classList.add("global-message");
+    messageDiv.innerHTML = `<p style="color:${color}; margin: 0;">${msg}</p>`;
     resultContainer.parentNode.insertBefore(messageDiv, resultContainer);
     setTimeout(() => {
       messageDiv.remove();
     }, 3000);
   };
+  
 
   // Función para quitar la clase "active" de ambos botones
   const clearSelected = () => {
@@ -65,14 +66,22 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Temperatura:</strong> <input type="text" class="equip-temp" value="${equipment.temp_equip || ''}"></p>
         <p><strong>Encendido/Apagado:</strong> <input type="text" class="equip-onoff" value="${equipment.on_off_equip ? 'Encendido' : 'Apagado'}" readonly></p>
         <p><strong>Causa del Daño:</strong> <input type="text" class="equip-causa" value="${equipment.cau_dam_equip || ''}"></p>
-        <p><strong>Condición del Equipo:</strong> <input type="text" class="equip-cond" value="${equipment.condEquip || ''}"></p>
+        <p><strong>Condición del Equipo:</strong> 
+          <select class="equip-cond">
+            <option value="ENTREGADO_REPARADO" ${equipment.condEquip === 'ENTREGADO_REPARADO' ? 'selected' : ''}>ENTREGADO REPARADO</option>
+            <option value="ENTREGADO_SIN_REPARACION" ${equipment.condEquip === 'ENTREGADO_SIN_REPARACION' ? 'selected' : ''}>ENTREGADO SIN REPARACION</option>
+            <option value="EN_REPARACION" ${equipment.condEquip === 'EN_REPARACION' ? 'selected' : ''}>EN REPARACION</option>
+            <option value="ALMACENADO_SIN_REPARACION" ${equipment.condEquip === 'ALMACENADO_SIN_REPARACION' ? 'selected' : ''}>ALMACENADO SIN REPARACION</option>
+            <option value="CHATARRIZADO" ${equipment.condEquip === 'CHATARRIZADO' ? 'selected' : ''}>CHATARRIZADO</option>
+          </select>
+        </p>
         <p><strong>ID Cliente:</strong> <input type="text" class="equip-idcustomer" value="${equipment.id_customer || ''}" readonly></p>
         <p><strong>Nombre Cliente:</strong> <input type="text" class="equip-name" value="${equipment.name || ''}" readonly></p>
         ${
           showActions
             ? `<div class="equipment-actions">
-                 <button class="Borrar">Borrar</button>
-                 <button class="Actualizar">Actualizar</button>
+                 <button type="button" class="Borrar">Borrar</button>
+                 <button type="button" class="Actualizar">Actualizar</button>
                </div>`
             : ""
         }
@@ -412,4 +421,25 @@ document.addEventListener("DOMContentLoaded", () => {
         resultContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
       });
   });
+  const btnDarkMode = document.getElementById("btn-dark-mode");
+
+    // Aplicar el modo oscuro si estaba activado
+    if (localStorage.getItem("dark-mode") === "enabled") {
+        document.body.classList.add("dark-mode");
+        if (btnDarkMode) btnDarkMode.textContent = "☀️";
+    }
+
+    if (btnDarkMode) {
+        btnDarkMode.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+
+            if (document.body.classList.contains("dark-mode")) {
+                localStorage.setItem("dark-mode", "enabled");
+                btnDarkMode.textContent = "☀️";
+            } else {
+                localStorage.setItem("dark-mode", "disabled");
+                btnDarkMode.textContent = "🌑";
+            }
+        });
+    }
 });

@@ -1,0 +1,294 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API de Clientes",
+      "version": "1.0.0",
+      "description": "Documentación de la API para la gestión de clientes."
+    },
+    "paths": {
+      "/api/customer/findAll": {
+        "get": {
+          "summary": "Obtener todos los clientes",
+          "description": "Retorna una lista de todos los clientes ordenados por nombre.",
+          "responses": {
+            "200": {
+              "description": "Lista de clientes obtenida correctamente.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Customer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/customer/cedula/{cardIdentifi}": {
+        "get": {
+          "summary": "Obtener cliente por cédula",
+          "description": "Retorna la información de un cliente según su número de cédula.",
+          "parameters": [
+            {
+              "name": "cardIdentifi",
+              "in": "path",
+              "required": true,
+              "description": "Número de cédula del cliente",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Cliente encontrado.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Cliente no encontrado."
+            }
+          }
+        }
+      },
+      "/api/customer/find/{id}": {
+        "get": {
+          "summary": "Obtener cliente por ID",
+          "description": "Retorna la información de un cliente según su ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID del cliente",
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Cliente encontrado.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Cliente no encontrado."
+            }
+          }
+        }
+      },
+      "/api/customer/save": {
+        "post": {
+          "summary": "Crear un cliente",
+          "description": "Crea un nuevo cliente. Retorna error si el nombre está vacío o si ya existe la cédula.",
+          "requestBody": {
+            "description": "Objeto de cliente a crear",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Cliente creado exitosamente."
+            },
+            "400": {
+              "description": "Error en la creación del cliente. Nombre vacío o cédula duplicada."
+            }
+          }
+        }
+      },
+      "/api/customer/update/{id}": {
+        "put": {
+          "summary": "Actualizar cliente por ID",
+          "description": "Actualiza los datos de un cliente existente según su ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID del cliente a actualizar",
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Objeto con los nuevos datos del cliente",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Registro actualizado correctamente."
+            },
+            "404": {
+              "description": "Cliente no encontrado."
+            }
+          }
+        }
+      },
+      "/api/customer/delete/{id}": {
+        "delete": {
+          "summary": "Eliminar cliente por ID",
+          "description": "Elimina un cliente de la base de datos según su ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID del cliente a eliminar",
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Registro eliminado correctamente."
+            },
+            "400": {
+              "description": "Error al eliminar el registro."
+            }
+          }
+        }
+      },
+      "/api/customer/deletee/{cardIdentifi}": {
+        "delete": {
+          "summary": "Eliminar cliente por cédula",
+          "description": "Elimina un cliente usando su número de cédula.",
+          "parameters": [
+            {
+              "name": "cardIdentifi",
+              "in": "path",
+              "required": true,
+              "description": "Número de cédula del cliente a eliminar",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Registro eliminado correctamente."
+            },
+            "404": {
+              "description": "Cliente no encontrado."
+            }
+          }
+        }
+      },
+      "/api/customer/updatee/{cardIdentifi}": {
+        "put": {
+          "summary": "Actualizar cliente por cédula",
+          "description": "Actualiza los datos de un cliente según su número de cédula.",
+          "parameters": [
+            {
+              "name": "cardIdentifi",
+              "in": "path",
+              "required": true,
+              "description": "Número de cédula del cliente a actualizar",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Objeto con los nuevos datos del cliente",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Registro actualizado correctamente."
+            },
+            "404": {
+              "description": "Cliente no encontrado."
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Customer": {
+          "type": "object",
+          "properties": {
+            "id_customer": {
+              "type": "integer",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "example": "Juan Pérez"
+            },
+            "cardIdentifi": {
+              "type": "string",
+              "example": "1234567890"
+            },
+            "phone": {
+              "type": "string",
+              "example": "555-1234"
+            },
+            "mail": {
+              "type": "string",
+              "example": "juan@example.com"
+            }
+          }
+        },
+        "CustomerInput": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Juan Pérez"
+            },
+            "cardIdentifi": {
+              "type": "string",
+              "example": "1234567890"
+            },
+            "phone": {
+              "type": "string",
+              "example": "555-1234"
+            },
+            "mail": {
+              "type": "string",
+              "example": "juan@example.com"
+            }
+          },
+          "required": ["name", "cardIdentifi", "phone", "mail"]
+        }
+      }
+    }
+  }
+  

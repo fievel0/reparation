@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <p><strong>Reporte:</strong> ${equip.reported_equip}</p>
         <p><strong>Detalles Físico:</strong> ${equip.detail_phy_equip}</p>
         <p><strong>Temperatura:</strong> ${equip.temp_equip}</p>
-        <p><strong>Encendido/Apagado:</strong> ${equip.on_off_equip? 'Encendido' : 'Apagado'}</p>
+        <p><strong>Encendido/Apagado:</strong> ${equip.on_off_equip ? 'Encendido' : 'Apagado'}</p>
         <p><strong>Causa del daño:</strong> ${equip.cau_dam_equip}</p>
         <p><strong>Condición del Equipo:</strong> ${equip.condEquip}</p>
         <p><strong>ID Cliente:</strong> ${equip.id_customer}</p>
@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage--;
         renderPage();
         renderPaginationControls();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
       paginationContainer.appendChild(prevButton);
     }
@@ -158,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage = i;
         renderPage();
         renderPaginationControls();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
       paginationContainer.appendChild(pageButton);
     }
@@ -170,8 +172,30 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage++;
         renderPage();
         renderPaginationControls();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
       paginationContainer.appendChild(nextButton);
     }
   }
+  const btnDarkMode = document.getElementById("btn-dark-mode");
+
+    // Aplicar el modo oscuro si estaba activado
+    if (localStorage.getItem("dark-mode") === "enabled") {
+        document.body.classList.add("dark-mode");
+        if (btnDarkMode) btnDarkMode.textContent = "☀️";
+    }
+
+    if (btnDarkMode) {
+        btnDarkMode.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+
+            if (document.body.classList.contains("dark-mode")) {
+                localStorage.setItem("dark-mode", "enabled");
+                btnDarkMode.textContent = "☀️";
+            } else {
+                localStorage.setItem("dark-mode", "disabled");
+                btnDarkMode.textContent = "🌑";
+            }
+        });
+    }
 });

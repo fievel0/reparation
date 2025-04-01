@@ -93,28 +93,32 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
   
-    // Evento para el botón Borrar: muestra el modal de confirmación
+        // Evento para el botón Borrar: muestra el modal de confirmación
     btnBorrar.addEventListener("click", () => {
-        if (!btnID.classList.contains("active")) {
-            showError("Para borrar, selecciona la opción ID");
+        // Si ningún botón está activo, muestra error
+        if (!btnID.classList.contains("active") && !btnCedula.classList.contains("active")) {
+            showError("Por favor, selecciona una opción de búsqueda (ID o Cédula) para borrar");
             return;
         }
         const valor = inputField.value.trim();
         if (valor === "") {
-            showError("Por favor ingresa el ID para borrar");
+            showError("Por favor ingresa el valor para borrar");
             return;
         }
         
-        // Asigna el ID pendiente de borrado y muestra el modal
+        // Asigna el valor pendiente de borrado y muestra el modal
         pendingDeleteId = valor;
         modalConfirm.classList.remove("hidden");
     });
-  
+
     // Evento para el botón de confirmación "Sí" en el modal
     confirmYes.addEventListener("click", () => {
         if (!pendingDeleteId) return;
-        
-        const url = `http://localhost:8084/api/customer/delete/${pendingDeleteId}`;
+
+        // Verifica cuál es la búsqueda activa y arma el endpoint correspondiente
+        const url = btnID.classList.contains("active")
+            ? `http://localhost:8084/api/customer/delete/${pendingDeleteId}`
+            : `http://localhost:8084/api/customer/deletee/${pendingDeleteId}`;
         
         fetch(url, { method: "DELETE" })
             .then(response => {
@@ -135,33 +139,45 @@ document.addEventListener("DOMContentLoaded", () => {
                 modalConfirm.classList.add("hidden");
             });
     });
+
   
-    // Evento para el botón "Cancelar" en el modal
-    confirmNo.addEventListener("click", () => {
-        pendingDeleteId = null;
-        modalConfirm.classList.add("hidden");
-    });
-  
-    // Evento para el botón Actualizar
+        // Evento para el botón "Cancelar" en el modal
+        confirmNo.addEventListener("click", () => {
+            pendingDeleteId = null;
+            modalConfirm.classList.add("hidden");
+        });
+    
+        // Evento para el botón Actualizar
     btnActualizar.addEventListener("click", () => {
-        if (!btnID.classList.contains("active")) {
-            showError("Para actualizar, selecciona la opción ID");
-            return;
-        }
+        // Asegura que se haya hecho una búsqueda previamente
         const idField = document.getElementById("editId");
-        if (!idField) {
+        const cardField = document.getElementById("editCard");
+        
+        if (!idField && !cardField) {
             showError("No hay registro para actualizar. Realiza una búsqueda primero.");
             return;
         }
-        const id = idField.value.trim();
+
+        // En función de la búsqueda activa se obtiene el identificador correcto y se arma el endpoint
+        let identifier, url;
+        if (btnID.classList.contains("active")) {
+            identifier = idField.value.trim();
+            url = `http://localhost:8084/api/customer/update/${identifier}`;
+        } else if (btnCedula.classList.contains("active")) {
+            identifier = cardField.value.trim();
+            url = `http://localhost:8084/api/customer/updatee/${identifier}`;
+        } else {
+            showError("Por favor, selecciona una opción de búsqueda (ID o Cédula) para actualizar");
+            return;
+        }
+        
         const name = document.getElementById("editName").value.trim();
-        const cardIdentifi = document.getElementById("editCard").value.trim();
+        const cardIdentifi = cardField.value.trim();
         const phone = document.getElementById("editPhone").value.trim();
         const mail = document.getElementById("editMail").value.trim();
         
         const payload = { name, cardIdentifi, phone, mail };
-        const url = `http://localhost:8084/api/customer/update/${id}`;
-  
+
         fetch(url, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -183,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showError(error.message);
         });
     });
-  });
+
   document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form');
     const mensaje = document.getElementById('mensaje');
@@ -268,4 +284,25 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-  
+  const btnDarkMode = document.getElementById("btn-dark-mode");
+
+    // Aplicar el modo oscuro si estaba activado
+    if (localStorage.getItem("dark-mode") === "enabled") {
+        document.body.classList.add("dark-mode");
+        if (btnDarkMode) btnDarkMode.textContent = "☀️";
+    }
+
+    if (btnDarkMode) {
+        btnDarkMode.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+
+            if (document.body.classList.contains("dark-mode")) {
+                localStorage.setItem("dark-mode", "enabled");
+                btnDarkMode.textContent = "☀️";
+            } else {
+                localStorage.setItem("dark-mode", "disabled");
+                btnDarkMode.textContent = "🌑";
+            }
+        });
+    }
+});
