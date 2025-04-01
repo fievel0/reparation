@@ -15,4 +15,5 @@ public interface IEmployeeService {
     ResponseEntity<?> save(Employee employee);
 
     void deleteById(Long idEmployee);
+    Optional<Employee> findByCedula(String cedEmployee);
 }

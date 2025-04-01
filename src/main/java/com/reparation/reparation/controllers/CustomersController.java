@@ -145,5 +145,34 @@ public ResponseEntity<?> getCustomersByCardIdentifi(@PathVariable("cardIdentifi"
         }
 
         return ResponseEntity.badRequest().build();
-    }  
+    }
+    // Borrar cliente por cédula
+    @DeleteMapping("/deletee/{cardIdentifi}")
+    public ResponseEntity<?> deleteByCardIdentifi(@PathVariable("cardIdentifi") String cardIdentifi) {
+        Optional<Customers> customerOptional = customerService.findByCardIdentifi(cardIdentifi);
+        if (customerOptional.isPresent()) {
+            // Utilizamos el id obtenido para llamar al método deleteById
+            customerService.deleteById(customerOptional.get().getId_customer());
+            return ResponseEntity.ok("Registro Eliminado");
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    // Actualizar cliente por cédula
+    @PutMapping("/updatee/{cardIdentifi}")
+    public ResponseEntity<?> updateByCardIdentifi(@PathVariable("cardIdentifi") String cardIdentifi, @RequestBody CustomerDTO customerDTO) {
+        Optional<Customers> customerOptional = customerService.findByCardIdentifi(cardIdentifi);
+        if (customerOptional.isPresent()) {
+            Customers customer = customerOptional.get();
+            // Actualizamos los datos; si deseas permitir la modificación de la cédula, lo dejas, de lo contrario, lo omites
+            customer.setName(customerDTO.getName());
+            customer.setCardIdentifi(customerDTO.getCardIdentifi());
+            customer.setPhone(customerDTO.getPhone());
+            customer.setMail(customerDTO.getMail());
+            customerService.save(customer);
+            return ResponseEntity.ok("Registro Actualizado");
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

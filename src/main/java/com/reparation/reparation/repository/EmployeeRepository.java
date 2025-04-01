@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.reparation.reparation.entities.Employee;
 
+import java.util.Optional;
+
 @Repository
 public interface EmployeeRepository extends CrudRepository <Employee, Long>{
 
+    Optional<Employee> findByCedEmployee(String cedEmployee);
 }

@@ -15,4 +15,5 @@ public interface IEmployeeDAO {
     void deleteById(Long idEmployee);
 
 
+    Optional<Employee> findByCedEmployee(String cedEmployee);
 }

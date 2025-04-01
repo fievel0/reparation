@@ -38,6 +38,10 @@ public class EmployeeService implements IEmployeeService {
     public void deleteById(Long idEmployee) {
         employeeDAO.deleteById(idEmployee);
     }
-    
+    // Implementación del nuevo método para buscar por cédula
+    @Override
+    public Optional<Employee> findByCedula(String cedEmployee) {
+        return employeeDAO.findByCedEmployee(cedEmployee);
+    }
 
 }

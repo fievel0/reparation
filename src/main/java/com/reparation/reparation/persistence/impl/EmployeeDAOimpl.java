@@ -36,4 +36,10 @@ public class EmployeeDAOimpl implements IEmployeeDAO{
         employeeRepository.deleteById(idEmployee);
     }
 
+    @Override
+    public Optional<Employee> findByCedEmployee(String cedEmployee) {
+        return employeeRepository.findByCedEmployee(cedEmployee);
+    }
+
+
 }

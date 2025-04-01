@@ -131,5 +131,62 @@ public class EmployeeController {
 
         return ResponseEntity.badRequest().build();
     }
+    @GetMapping("/cedula/{cedEmployee}")
+    public ResponseEntity<?> findByCedula(@PathVariable String cedEmployee) {
+        Optional<Employee> employeeOptional = employeeService.findByCedula(cedEmployee);
+        if (employeeOptional.isPresent()) {
+            Employee employee = employeeOptional.get();
+            EmployeeDTO employeeDTO = EmployeeDTO.builder()
+                    .idEmployee(employee.getIdEmployee())
+                    .nameEmployee(employee.getNameEmployee())
+                    .positionEmployee(employee.getPositionEmployee())
+                    .cedEmployee(employee.getCedEmployee())
+                    .dirEmployee(employee.getDirEmployee())
+                    .telEmpployee(employee.getTelEmpployee())
+                    .orders(employee.getOrders().stream()
+                            .map(order -> Rep_orderDTO.builder()
+                                    .id_order(order.getId_order())
+                                    .create_date(order.getCreate_date())
+                                    .deadline(order.getDeadline())
+                                    .build())
+                            .collect(Collectors.toList()))
+                    .build();
+            return ResponseEntity.ok(employeeDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empleado no existe");
+        }
+    }
+    @DeleteMapping("/deletee/{cedEmployee}")
+    public ResponseEntity<?> deleteByCedula(@PathVariable String cedEmployee) {
+        Optional<Employee> employeeOptional = employeeService.findByCedula(cedEmployee);
+        if (employeeOptional.isPresent()) {
+            Employee employee = employeeOptional.get();
+            employeeService.deleteById(employee.getIdEmployee());
+            return ResponseEntity.ok("Registro Eliminado");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empleado no existe");
+        }
+    }
+    @PutMapping("/updatee/{cedEmployee}")
+    public ResponseEntity<?> updateByCedula(@PathVariable String cedEmployee, @RequestBody EmployeeDTO employeeDTO) {
+        Optional<Employee> employeeOptional = employeeService.findByCedula(cedEmployee);
+        if (employeeOptional.isPresent()) {
+            Employee employee = employeeOptional.get();
+            // Actualiza los campos del empleado
+            employee.setNameEmployee(employeeDTO.getNameEmployee());
+            employee.setPositionEmployee(employeeDTO.getPositionEmployee());
+            // Si deseas actualizar la cédula (por ejemplo, si se permite cambiarla)
+            employee.setCedEmployee(employeeDTO.getCedEmployee());
+            employee.setDirEmployee(employeeDTO.getDirEmployee());
+            employee.setTelEmpployee(employeeDTO.getTelEmpployee());
+            employeeService.save(employee);
+            return ResponseEntity.ok("Registro Actualizado");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empleado no existe");
+        }
+    }
+
+
+
 }
 

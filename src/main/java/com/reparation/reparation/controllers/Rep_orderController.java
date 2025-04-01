@@ -83,7 +83,7 @@ public class Rep_orderController {
                     .cau_dam_equip(rep_order.getEquipment().getCau_dam_equip())
                     .condEquip(rep_order.getEquipment().getCondEquip())
                 .build())
-                
+
                 .payments(rep_order.getPaymentsList().stream()
                     .map(payment -> PaymentsDTO.builder()
                         .id_pay(payment.getId_pay())
@@ -157,20 +157,64 @@ public class Rep_orderController {
 @GetMapping("/findLast")
 public ResponseEntity<?> findLast() {
     Optional<Rep_order> repOrderOptional = rep_orderService.findLast();
-    
+
     if (repOrderOptional.isPresent()) {
         Rep_order rep_order = repOrderOptional.get();
 
-        // Convierte el objeto a DTO
+        // Convierte el objeto a DTO con todos los campos y relaciones
         Rep_orderDTO rep_orderDTO = Rep_orderDTO.builder()
-            .id_order(rep_order.getId_order())
-        .build();
+                .id_order(rep_order.getId_order())
+                .create_date(rep_order.getCreate_date())
+                .deadline(rep_order.getDeadline())
+                .tot_pay(rep_order.getTot_pay())
+                .addit_details(rep_order.getAddit_details())
+
+                .customer(CustomerDTO.builder()
+                        .id_customer(rep_order.getCustomer().getId_customer())
+                        .name(rep_order.getCustomer().getName())
+                        .cardIdentifi(rep_order.getCustomer().getCardIdentifi())
+                        .phone(rep_order.getCustomer().getPhone())
+                        .mail(rep_order.getCustomer().getMail())
+                        .build())
+
+                .equipment(EquipmentDTO.builder()
+                        .id_equip(rep_order.getEquipment().getId_equip())
+                        .model_equip(rep_order.getEquipment().getModel_equip())
+                        .brand_equip(rep_order.getEquipment().getBrand_equip())
+                        .color_equip(rep_order.getEquipment().getColor_equip())
+                        .state_equip(rep_order.getEquipment().getState_equip())
+                        .pass_equip(rep_order.getEquipment().getPass_equip())
+                        .anti_equip(rep_order.getEquipment().getAnti_equip())
+                        .accessor_equip(rep_order.getEquipment().getAccessor_equip())
+                        .reported_equip(rep_order.getEquipment().getReported_equip())
+                        .detail_phy_equip(rep_order.getEquipment().getDetail_phy_equip())
+                        .temp_equip(rep_order.getEquipment().getTemp_equip())
+                        .on_off_equip(rep_order.getEquipment().isOn_off_equip())
+                        .cau_dam_equip(rep_order.getEquipment().getCau_dam_equip())
+                        .condEquip(rep_order.getEquipment().getCondEquip())
+                        .build())
+
+                .payments(rep_order.getPaymentsList().stream()
+                        .map(payment -> PaymentsDTO.builder()
+                                .id_pay(payment.getId_pay())
+                                .date_pay(payment.getDate_pay())
+                                .money_pay(payment.getMoney_pay())
+                                .money_b_pay(payment.getMoney_b_pay())
+                                .build())
+                        .collect(Collectors.toList()))
+
+                .employee(EmployeeDTO.builder()
+                        .idEmployee(rep_order.getEmployee().getIdEmployee())
+                        .nameEmployee(rep_order.getEmployee().getNameEmployee())
+                        .build())
+                .build();
 
         return ResponseEntity.ok(rep_orderDTO);
     }
 
     return ResponseEntity.notFound().build();
 }
+
 /*********************************************************************************************** */
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody Rep_orderDTO orderDTO) throws URISyntaxException{
